@@ -142,4 +142,9 @@ def parse_gencod_lines(lines: List[str]) -> List[GencodServiceMessage]:
             messages=messages,
             line=line
         )
+
+        # Synchroniser type_message depuis le dictionnaire courant
+        # (il est mis à jour par la rubrique 198)
+        type_message = current.get("type_message", "")
+
     return messages
