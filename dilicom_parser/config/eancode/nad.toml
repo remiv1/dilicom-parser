@@ -1,0 +1,31 @@
+# Configuration EANCOM D96A - Segment NAD (Parties Identifiées)
+# Page 8
+# Format: NAD+<3035>+<3039>::<3055>
+# Exemple: NAD+SU+7609999000089::9
+
+[nad]
+description = "Segments des parties identifiées (répétitifs)"
+segment_name = "NAD"
+repetable = true
+occurrences = 3
+observation = "Segment répété 3 fois : une pour SU (fournisseur), une pour BY (acheteur), une pour DP (livré à)"
+
+[[nad.elements]]
+de = "3035"
+de_name = "Fonction de la personne morale identifiée"
+format_complet = "an..3"
+format_utilise = "2a"
+observation = "SU = fournisseur, BY = acheteur, DP = livré à"
+
+[[nad.elements]]
+de = "3039"
+de_name = "GLN de la personne morale identifiée"
+format_complet = "an..35"
+format_utilise = "13n"
+
+[[nad.elements]]
+de = "3055"
+de_name = "Code responsable de l'identifiant"
+format_complet = "an..3"
+format_utilise = "1n"
+observation = "9 = GS1"

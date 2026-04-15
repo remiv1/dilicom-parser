@@ -1,0 +1,67 @@
+# Configuration EANCOM D96A - Segment UNB (En-tête)
+# Page 7
+
+[unb]
+description = "En-tête de l'interchange"
+segment_name = "UNB"
+
+[[unb.elements]]
+de = "0001"
+de_name = "Identifiant de syntaxe"
+format_complet = "4a"
+format_utilise = "4a"
+observation = "UNOA, UNOB, UNOC, UNOD, UNOE, UNOF"
+
+[[unb.elements]]
+de = "0002"
+de_name = "Numéro de la version"
+format_complet = "1n"
+format_utilise = "1n"
+observation = "= 3"
+
+[[unb.elements]]
+de = "0004"
+de_name = "GLN émetteur"
+format_complet = "an..35"
+format_utilise = "13n"
+
+[[unb.elements]]
+de = "0007"
+de_name = "Qualifiant du code d'identification"
+format_complet = "an..4"
+format_utilise = "2an"
+observation = "14 = EAN"
+
+[[unb.elements]]
+de = "0010"
+de_name = "GLN destinataire"
+format_complet = "an..35"
+format_utilise = "13n"
+
+[[unb.elements]]
+de = "0007"
+de_name = "Qualifiant du code d'identification"
+format_complet = "an..4"
+format_utilise = "2an"
+observation = "14 = EAN"
+
+[[unb.elements]]
+de = "0017"
+de_name = "Date de préparation"
+format_complet = "6n"
+format_utilise = "6n"
+observation = "Format AAMMJJ"
+
+[[unb.elements]]
+de = "0019"
+de_name = "Heure de préparation"
+format_complet = "6n"
+format_utilise = "6n"
+observation = "Format HHmm"
+
+[[unb.elements]]
+de = "0020"
+de_name = "Référence unique de l'interchange"
+format_complet = "14an"
+format_utilise = "6n"
+observation = "DE 0020 dans UZ doit avoir la même valeur"

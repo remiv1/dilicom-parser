@@ -1,0 +1,76 @@
+# Configuration EANCOM D96A - Segment DTM (Dates/Heures)
+# Page 7-8
+
+[dtm]
+description = "Segments de date et heure (répétitifs)"
+segment_name = "DTM"
+repetable = true
+
+[[dtm.occurrences]]
+name = "Date de création du document"
+
+[[dtm.occurrences.elements]]
+de = "2005"
+de_name = "Fonction du champ date"
+format_complet = "an..3"
+format_utilise = "3n"
+observation = "= 137 : date de création du document"
+
+[[dtm.occurrences.elements]]
+de = "2380"
+de_name = "Date"
+format_complet = "an..35"
+format_utilise = "an..35"
+
+[[dtm.occurrences.elements]]
+de = "2379"
+de_name = "Format de la date"
+format_complet = "an..3"
+format_utilise = "an..3"
+observation = "102 = CCYYMMDD, 203 = CCYYMMDDHHMM"
+
+[[dtm.occurrences]]
+name = "Date de traitement par le serveur"
+
+[[dtm.occurrences.elements]]
+de = "2005"
+de_name = "Fonction du champ date"
+format_complet = "an..3"
+format_utilise = "1n"
+observation = "= 4 : date de traitement par le serveur"
+
+[[dtm.occurrences.elements]]
+de = "2380"
+de_name = "Date"
+format_complet = "an..35"
+format_utilise = "an..35"
+
+[[dtm.occurrences.elements]]
+de = "2379"
+de_name = "Format de la date"
+format_complet = "an..3"
+format_utilise = "an..3"
+observation = "102 = CCYYMMDD, 203 = CCYYMMDDHHMM"
+
+[[dtm.occurrences]]
+name = "Date de lecture/remise destinataire"
+
+[[dtm.occurrences.elements]]
+de = "2005"
+de_name = "Fonction du champ date"
+format_complet = "an..3"
+format_utilise = "1n"
+observation = "= 8 : date de lecture de remise destinataire"
+
+[[dtm.occurrences.elements]]
+de = "2380"
+de_name = "Date"
+format_complet = "an..35"
+format_utilise = "an..35"
+
+[[dtm.occurrences.elements]]
+de = "2379"
+de_name = "Format de la date"
+format_complet = "an..3"
+format_utilise = "an..3"
+observation = "102 = CCYYMMDD, 203 = CCYYMMDDHHMM"

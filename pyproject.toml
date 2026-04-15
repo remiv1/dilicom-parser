@@ -10,3 +10,6 @@ dependencies = ["pandas"]
 
 [project.urls]
 Homepage = "https://github.com/remiv1/dilicom-parser"
+
+[tool.setuptools.packages.find]
+where = ["."]

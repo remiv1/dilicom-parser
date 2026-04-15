@@ -1,0 +1,177 @@
+# Configuration GENCOD CNUT 05003 - ANE
+# Avis de non-émission (CNUR 198-3 égal à 913)
+# Page 5
+
+[ane]
+description = "Avis de non-émission"
+message_type_code = "913"
+
+[ane.CNUT]
+code = "CNUT"
+zone = 1
+field_name = "CNUT MESSAGE DE SERVICE"
+format = "5n"
+value = "05003"
+
+[ane.destinataire]
+code = "100"
+field_name = "DESTINATAIRE"
+
+[[ane.destinataire.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "100"
+
+[[ane.destinataire.fields]]
+zone = 2
+field_name = "GLN destinataire"
+format = "13n"
+
+[ane.emetteur]
+code = "221"
+field_name = "EMETTEUR"
+
+[[ane.emetteur.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "221"
+
+[[ane.emetteur.fields]]
+zone = 2
+field_name = "GLN émetteur"
+format = "13n"
+observation = "GLN émetteur du message"
+
+[ane.date_emission]
+code = "176"
+field_name = "DATE D'EMISSION"
+
+[[ane.date_emission.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "176"
+
+[[ane.date_emission.fields]]
+zone = 2
+field_name = "Date d'émission"
+format = "6n"
+observation = "Format JJMMAA"
+
+[ane.identificateur_reseau]
+code = "198"
+field_name = "IDENTIFICATEUR DU RESEAU"
+
+[[ane.identificateur_reseau.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "198"
+
+[[ane.identificateur_reseau.fields]]
+zone = 2
+field_name = "Identificateur du réseau"
+format = "12an"
+value = "&&&EDILECTRE"
+
+[[ane.identificateur_reseau.fields]]
+zone = 3
+field_name = "Type de message Dilicom"
+format = "3n"
+value = "913"
+
+[ane.commentaires]
+code = "177"
+field_name = "COMMENTAIRES (répétitifs)"
+repetable = true
+
+[[ane.commentaires.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "177"
+
+[[ane.commentaires.fields]]
+zone = 2
+field_name = "Identificateur"
+format = "3n"
+value = "905"
+
+[[ane.commentaires.fields]]
+zone = 3
+field_name = "GLN émetteur message d'origine"
+format = "13n"
+observation = "GLN émetteur"
+
+[[ane.commentaires.fields]]
+zone = 4
+field_name = "CNUT message d'origine"
+format = "3n"
+observation = "023 = commande, 024 = avis d'expédition, 152 = Journal des mouvements"
+
+[[ane.commentaires.fields]]
+zone = 5
+field_name = "Référence du CNUT"
+format = "8an"
+observation = "si CNUR 177-4=023 => Référence commande, si CNUR 177-4=024 => Référence Avis d'exp., si CNUR 177-4=152 => Référence JML"
+
+[[ane.commentaires.fields]]
+zone = 6
+field_name = "Numéro d'envoi"
+format = "6n"
+observation = "Référence d'envoi du message traité"
+
+[[ane.commentaires.fields]]
+zone = 7
+field_name = "Date d'envoi"
+format = "6n"
+observation = "Format JJMMAA"
+
+[[ane.commentaires.fields]]
+zone = 8
+field_name = "GLN destinataire"
+format = "13n"
+observation = "GLN du destinataire du message"
+
+[[ane.commentaires.fields]]
+zone = 9
+field_name = "Code erreur"
+format = "3"
+
+[[ane.commentaires.fields]]
+zone = 10
+field_name = "Numéro de ligne en erreur"
+format = "6n"
+
+[[ane.commentaires.fields]]
+zone = 11
+field_name = "Position de l'erreur dans la ligne"
+format = "3n"
+
+[[ane.commentaires.fields]]
+zone = 12
+field_name = "Zone en erreur"
+format = "20an"
+
+[[ane.commentaires.fields]]
+zone = 13
+field_name = "Libellé de l'erreur"
+format = "80an"
+
+[ane.fin_acte]
+code = "199"
+field_name = "FIN D'ACTE"
+
+[[ane.fin_acte.fields]]
+zone = 1
+field_name = "Code rubrique"
+format = "3n"
+value = "199"
+
+[[ane.fin_acte.fields]]
+zone = 2
+field_name = "Nombre de rubriques"
+format = "6n"
+observation = "Y compris CNUR 199"

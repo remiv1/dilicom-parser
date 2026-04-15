@@ -1,0 +1,19 @@
+# Configuration EANCOM D96A - Segment BGM (Identification du Document)
+# Page 7
+
+[bgm]
+description = "Identification du document"
+segment_name = "BGM"
+
+[[bgm.elements]]
+de = "1004"
+de_name = "Identification du document"
+format_complet = "an..35"
+format_utilise = "an..35"
+
+[[bgm.elements]]
+de = "4343"
+de_name = "Type d'acquittement"
+format_complet = "3an"
+format_utilise = "3an"
+observation = "AB : avis de traitement/lecture, RE : erreur"

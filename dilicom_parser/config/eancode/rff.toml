@@ -1,0 +1,19 @@
+# Configuration EANCOM D96A - Segment RFF (Références)
+# Page 7
+
+[rff]
+description = "Références"
+segment_name = "RFF"
+
+[[rff.elements]]
+de = "1153"
+de_name = "Référence message acquitté"
+format_complet = "3n"
+format_utilise = "3n"
+observation = "= AAA"
+
+[[rff.elements]]
+de = "1154"
+de_name = "Identification de la référence"
+format_complet = "an..70"
+format_utilise = "8an"

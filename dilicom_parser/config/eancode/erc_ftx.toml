@@ -1,0 +1,40 @@
+# Configuration EANCOM D96A - Segments ERC et FTX (Erreurs)
+# Page 8
+
+[erc]
+description = "Segment d'erreur - Code erreur"
+segment_name = "ERC"
+optional = true
+observation = "Présent si AST ou ANE"
+
+[[erc.elements]]
+de = "9321"
+de_name = "Code erreur"
+format_complet = "an..3"
+format_utilise = "3n"
+
+[[erc.elements]]
+de = "1131"
+de_name = "Code d'identification de l'erreur"
+format_complet = "n..17"
+format_utilise = "3n"
+observation = "= ZZZ : convenu entre les parties"
+
+[ftx]
+description = "Segment d'erreur - Libellé de l'erreur"
+segment_name = "FTX"
+optional = true
+observation = "Présent si AST ou ANE"
+
+[[ftx.elements]]
+de = "4451"
+de_name = "Code erreur"
+format_complet = "an..3"
+format_utilise = "3An"
+observation = "= AAE : Acknowledgement description"
+
+[[ftx.elements]]
+de = "4440"
+de_name = "Libellé de l'erreur"
+format_complet = "an..512"
+format_utilise = "35an"

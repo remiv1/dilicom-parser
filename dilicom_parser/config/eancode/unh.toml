@@ -1,0 +1,47 @@
+# Configuration EANCOM D96A - Segment UNH (Header du Message)
+# Page 7
+
+[unh]
+description = "Header du message"
+segment_name = "UNH"
+
+[[unh.elements]]
+de = "0062"
+de_name = "Numéro référence unique du message"
+format_complet = "an..14"
+format_utilise = "an..14"
+observation = "DE 0062 dans UNT doit avoir la même valeur"
+
+[[unh.elements]]
+de = "0065"
+de_name = "Type de message"
+format_complet = "an..6"
+format_utilise = "an..6"
+observation = "= APERAK"
+
+[[unh.elements]]
+de = "0052"
+de_name = "Numéro de la version"
+format_complet = "an..3"
+format_utilise = "1an"
+observation = "= D"
+
+[[unh.elements]]
+de = "0054"
+de_name = "Numéro de révision"
+format_complet = "an..3"
+format_utilise = "3an"
+observation = "= 96A"
+
+[[unh.elements]]
+de = "0051"
+de_name = "Agence de contrôle"
+format_complet = "an..2"
+format_utilise = "2a"
+observation = "= UN"
+
+[[unh.elements]]
+de = "0057"
+de_name = "Version GS1"
+format_complet = "an..6"
+format_utilise = "an..6"
