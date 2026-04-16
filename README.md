@@ -20,8 +20,25 @@ Elle fournit des modèles de données stricts, des parseurs robustes et des outi
 
 ## 📄 Exemple d’utilisation
 
+Créer le fichier .env avec les variables d’environnement nécessaires :
+
+```ini
+#.env
+DILICOM_IN_DIR=/path/to/dilicom/files
+DILICOM_OUT_DIR=/path/to/output
+DILICOM_HOST=ftp.example.com
+DILICOM_PORT=11234
+DILICOM_USER=username
+DILICOM_SECRET=password
+```
+
+Ensuite, utiliser le parser dans votre code Python :
+
 ```python
+from dotenv import load_dotenv
 from dilicom_parser import DistributorParser
+
+load_dotenv('.path/to/.env')
 
 parser = DistributorParser()
 data = parser.parse_file("distributeur.txt")

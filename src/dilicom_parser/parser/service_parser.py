@@ -4,12 +4,12 @@ from typing import Optional, List, Union
 from os import getenv
 from pathlib import Path
 
-from dilicom_parser.models.service import (
+from ..models.service import (
     GencodServiceMessage,
     EancomInterchange,
 )
-from dilicom_parser.parser.services.gencod import parse_gencod_lines
-from dilicom_parser.parser.services.eancom import parse_eancom
+from .services.gencod import parse_gencod_lines
+from .services.eancom import parse_eancom
 
 
 class ServiceParser:

@@ -3,13 +3,13 @@
 import warnings
 from dataclasses import dataclass, field
 from typing import Callable, List, Optional
-from dilicom_parser.models.service import (
+from ...models.service import (
     EancomInterchange,
     EancomServiceMessage,
     EancomNAD,
     EancomErreur,
 )
-from dilicom_parser.utils.exceptions import SegmentInconnuWarning
+from ...utils.exceptions import SegmentInconnuWarning
 
 
 def parse_eancom(content: str) -> EancomInterchange:

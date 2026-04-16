@@ -4,7 +4,7 @@ from typing import Optional, List
 from os import getenv
 from pathlib import Path
 import pandas as pd
-from dilicom_parser.models.distributor import (
+from ..models.distributor import (
     df_to_distributor_data, DistributorData, FileDistri
 )
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from src.dilicom_parser.parser.services.eancom import parse_eancom
+from src.dilicom_parser.parser import parse_eancom
 from src.dilicom_parser.utils.exceptions import SegmentInconnuWarning
 
 

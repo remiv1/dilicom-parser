@@ -8,6 +8,7 @@ Nous nous engageons à agir et interagir de manière à contribuer à une commun
 ## Nos Standards
 
 Exemples de comportements qui contribuent à un environnement positif :
+
 - Faire preuve d’empathie et de bienveillance envers les autres
 - Respecter les opinions, points de vue et expériences différents
 - Donner et accepter avec grâce des retours constructifs
@@ -71,7 +72,6 @@ Ce Code de Conduite est adapté du Contributor Covenant, version 2.0 :
 
 Les directives d’application s’inspirent de l’« enforcement ladder » du Code de Conduite de Mozilla :
 [https://github.com/mozilla/diversity]
-
 
 Pour les réponses aux questions fréquentes, consultez la FAQ :
 [https://www.contributor-covenant.org/faq]

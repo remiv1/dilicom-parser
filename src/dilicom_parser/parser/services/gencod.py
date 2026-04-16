@@ -1,7 +1,7 @@
 """Parseur de messages de service au format GENCOD (CNUT 05003)."""
 
 from typing import List, Dict, Any
-from dilicom_parser.models.service import (
+from ...models.service import (
     GencodServiceMessage,
     GencodCommentaireAleAte,
     GencodCommentaireErreur,
