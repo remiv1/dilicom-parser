@@ -1,6 +1,6 @@
 [project]
 name = "dilicom-parser"
-version = "0.1.0"
+version = "0.1.2"
 description = "Bibliothèque souveraine pour parser les fichiers Dilicom déposés sur le serveur SFTP de Dilicom"
 authors = [{name="Rémi Verschuur", email="rverschuur@audit-io.fr"}]
 readme = "README.md"
@@ -11,5 +11,8 @@ dependencies = ["pandas"]
 [project.urls]
 Homepage = "https://github.com/remiv1/dilicom-parser"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]

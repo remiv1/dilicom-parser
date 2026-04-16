@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from dilicom_parser.parser.services.eancom import parse_eancom
-from dilicom_parser.utils.exceptions import SegmentInconnuWarning
+from src.dilicom_parser.parser.services.eancom import parse_eancom
+from src.dilicom_parser.utils.exceptions import SegmentInconnuWarning
 
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"

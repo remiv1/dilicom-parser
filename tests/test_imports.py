@@ -1,6 +1,6 @@
 """Tests pour les imports des classes principales du module dilicom_parser."""
 
-from dilicom_parser import DistributorParser
+from src.dilicom_parser import DistributorParser
 
 
 def test_imports():

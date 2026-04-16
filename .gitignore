@@ -1,2 +1,11 @@
 venv/
 __pycache__/
+.pypirc
+/dist
+*.egg-info
+*.egg
+build
+*.pyc
+*.tar.gz
+*.whl
+.DS_Store

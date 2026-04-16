@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from dilicom_parser.parser.services.gencod import parse_gencod_lines
-from dilicom_parser.models.service import GencodCommentaireAleAte, GencodCommentaireErreur
+from src.dilicom_parser.parser.services.gencod import parse_gencod_lines
+from src.dilicom_parser.models.service import GencodCommentaireAleAte, GencodCommentaireErreur
 
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
