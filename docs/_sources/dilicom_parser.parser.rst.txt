@@ -1,0 +1,37 @@
+dilicom\_parser.parser package
+==============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dilicom_parser.parser.services
+
+Submodules
+----------
+
+dilicom\_parser.parser.distributor\_parser module
+-------------------------------------------------
+
+.. automodule:: dilicom_parser.parser.distributor_parser
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.parser.service\_parser module
+---------------------------------------------
+
+.. automodule:: dilicom_parser.parser.service_parser
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: dilicom_parser.parser
+   :members:
+   :show-inheritance:
+   :undoc-members:

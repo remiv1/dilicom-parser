@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dilicom_parser.models package &#8212; Documentation dilicom-parser 0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=bf78f4d7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="dilicom-parser-models-package">
+<h1>dilicom_parser.models package<a class="headerlink" href="#dilicom-parser-models-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+<section id="module-dilicom_parser.models.connector">
+<span id="dilicom-parser-models-connector-module"></span><h2>dilicom_parser.models.connector module<a class="headerlink" href="#module-dilicom_parser.models.connector" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module des modèles de données pour la gestion des fichiers distants sur le serveur SFTP de Dilicom.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.connector.RemoteFile">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.connector.</span></span><span class="sig-name descname"><span class="pre">RemoteFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.connector.RemoteFile" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Classe représentant un fichier distant sur le serveur SFTP de Dilicom.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.connector.RemoteFile.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#dilicom_parser.models.connector.RemoteFile.filename" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Le nom du fichier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.connector.RemoteFile.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><a class="headerlink" href="#dilicom_parser.models.connector.RemoteFile.filepath" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Le chemin complet du fichier sur le serveur SFTP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.connector.RemoteFile.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#dilicom_parser.models.connector.RemoteFile.size" title="Lien vers cette définition">¶</a></dt>
+<dd><p>La taille du fichier en octets, ou None si non disponible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.connector.RemoteFile.modified_time">
+<span class="sig-name descname"><span class="pre">modified_time</span></span><a class="headerlink" href="#dilicom_parser.models.connector.RemoteFile.modified_time" title="Lien vers cette définition">¶</a></dt>
+<dd><p>La date et l’heure de la dernière modification du fichier,
+ou None si non disponible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id0" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">filepath</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">modified_time</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id3" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.models.distributor">
+<span id="dilicom-parser-models-distributor-module"></span><h2>dilicom_parser.models.distributor module<a class="headerlink" href="#module-dilicom_parser.models.distributor" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module de définition des structures de données pour les fichiers distributeurs reçus de Dilicom.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">DistributorData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">debut_fichier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_edi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_edi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fin_fichier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données complète pour les fichiers de type distributeur,
+regroupant les blocs 1, 2 et 3.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData.date_edi">
+<span class="sig-name descname"><span class="pre">date_edi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData.date_edi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData.debut_fichier">
+<span class="sig-name descname"><span class="pre">debut_fichier</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData.debut_fichier" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData.fin_fichier">
+<span class="sig-name descname"><span class="pre">fin_fichier</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData.fin_fichier" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData.lines">
+<span class="sig-name descname"><span class="pre">lines</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dilicom_parser.models.distributor.DistributorLineData" title="dilicom_parser.models.distributor.DistributorLineData"><span class="pre">DistributorLineData</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData.lines" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorData.ref_edi">
+<span class="sig-name descname"><span class="pre">ref_edi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorData.ref_edi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">DistributorDataBloc1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mvt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numero_voie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adresse_l1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adresse_l2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adresse_l3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_postal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ville</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pays</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rejet_postal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_tel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_fax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">website</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">siren_or_siret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_tva_intracom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_repreneur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs_repreneur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fonction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adherent_prisme</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données pour les fichiers de type “distributeur.
+Attributs:
+- ref: Numéro de la ligne
+- mvt: Type de mouvement</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>00: Extraction complète</p></li>
+<li><p>01: Extraction des distributeurs qui peuvent faire l’objet de commandes via DILICOM</p></li>
+<li><p>03 = Création</p></li>
+<li><p>04 = Modification complète</p></li>
+<li><p>05 = Modification du bloc 1</p></li>
+<li><p>06 = Modification du bloc 2</p></li>
+<li><p>07 = Modification du bloc 3</p></li>
+<li><p>08 = Suppression</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>gln: Code GLN du distributeur</p></li>
+<li><p>rs1: Raison sociale 1</p></li>
+<li><p>rs2: Raison sociale 2 (optionnel)</p></li>
+<li><p>numero_voie: Numéro de voie (optionnel)</p></li>
+<li><p>adresse_l1: Adresse ligne 1 (optionnel)</p></li>
+<li><p>adresse_l2: Adresse ligne 2 (optionnel)</p></li>
+<li><p>adresse_l3: Adresse ligne 3 (optionnel)</p></li>
+<li><p>code_postal: Code postal (optionnel)</p></li>
+<li><p>ville: Ville</p></li>
+<li><p>pays: Pays</p></li>
+<li><p>rejet_postal: Rejet postal (optionnel)</p></li>
+<li><p>num_tel: Numéro de téléphone (optionnel)</p></li>
+<li><p>num_fax: Numéro de fax (optionnel)</p></li>
+<li><p>email: Adresse email (optionnel)</p></li>
+<li><p>website: Site web (optionnel)</p></li>
+<li><p>siren_or_siret: Numéro SIREN ou SIRET (optionnel)</p></li>
+<li><p>num_tva_intracom: Numéro de TVA intracommunautaire (optionnel)</p></li>
+<li><p>gln_repreneur: Code GLN du repreneur (optionnel)</p></li>
+<li><p>rs_repreneur: Raison sociale du repreneur (optionnel)</p></li>
+<li><dl class="simple">
+<dt>fonction: Fonction du contact</dt><dd><ul>
+<li><p>01 = Distributeur</p></li>
+<li><p>02 = Grossiste/Comptoir/GIE</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>adherent_prisme: Indicateur d’adhésion au PRISME</dt><dd><ul>
+<li><p>0 = Non adhérent</p></li>
+<li><p>1 = Adhérent</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.adherent_prisme">
+<span class="sig-name descname"><span class="pre">adherent_prisme</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.adherent_prisme" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l1">
+<span class="sig-name descname"><span class="pre">adresse_l1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l2">
+<span class="sig-name descname"><span class="pre">adresse_l2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l3">
+<span class="sig-name descname"><span class="pre">adresse_l3</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.adresse_l3" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.code_postal">
+<span class="sig-name descname"><span class="pre">code_postal</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.code_postal" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.email">
+<span class="sig-name descname"><span class="pre">email</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.email" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.fonction">
+<span class="sig-name descname"><span class="pre">fonction</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.fonction" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.gln">
+<span class="sig-name descname"><span class="pre">gln</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.gln" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.gln_repreneur">
+<span class="sig-name descname"><span class="pre">gln_repreneur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.gln_repreneur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.mvt">
+<span class="sig-name descname"><span class="pre">mvt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.mvt" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.num_fax">
+<span class="sig-name descname"><span class="pre">num_fax</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.num_fax" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.num_tel">
+<span class="sig-name descname"><span class="pre">num_tel</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.num_tel" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.num_tva_intracom">
+<span class="sig-name descname"><span class="pre">num_tva_intracom</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.num_tva_intracom" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.numero_voie">
+<span class="sig-name descname"><span class="pre">numero_voie</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.numero_voie" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.pays">
+<span class="sig-name descname"><span class="pre">pays</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.pays" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.ref">
+<span class="sig-name descname"><span class="pre">ref</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.ref" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.rejet_postal">
+<span class="sig-name descname"><span class="pre">rejet_postal</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.rejet_postal" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.rs1">
+<span class="sig-name descname"><span class="pre">rs1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.rs1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.rs2">
+<span class="sig-name descname"><span class="pre">rs2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.rs2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.rs_repreneur">
+<span class="sig-name descname"><span class="pre">rs_repreneur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.rs_repreneur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.siren_or_siret">
+<span class="sig-name descname"><span class="pre">siren_or_siret</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.siren_or_siret" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.ville">
+<span class="sig-name descname"><span class="pre">ville</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.ville" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc1.website">
+<span class="sig-name descname"><span class="pre">website</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc1.website" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">DistributorDataBloc2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">integration_commande</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">place_commande</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heure_limite</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jours_collecte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_commandes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avis_expedition</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données pour les fichiers de type distributeur,
+bloc 2, connexion au serveur Dilicom.
+Attributs:
+- integration_commande: Intégration des commandes</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>01 = Automatique</p></li>
+<li><p>02 = Manuelle</p></li>
+<li><p>03 = Semi-automatique</p></li>
+<li><p>00 ou 04 = Non précisé</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>place_commande: Place de commande</dt><dd><ul>
+<li><p>00 = Non précisé</p></li>
+<li><p>01 = prioritaire</p></li>
+<li><p>02 = non-prioritaire</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>heure_limite:</dt><dd><ul>
+<li><p>HHMM: Heure limite de prise en compte des commandes pour le jour même</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>jours_collecte: Jours de collecte des commandes</dt><dd><ul>
+<li><p>LMMJVSD, O si non et 1 si oui</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>format_commandes: Format des commandes</dt><dd><ul>
+<li><p>01 = Imprimable</p></li>
+<li><p>02 = EDI (Codifié et intégrable)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>type_connection: Type de connexion</dt><dd><ul>
+<li><p>01 = Fax/Mail/Téléchargement</p></li>
+<li><p>02 = EDI (Codifié et intégrable)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>avis_expedition: Génération des avis d’expédition</dt><dd><ul>
+<li><p>01 = Pré-facturation/Stock théorique</p></li>
+<li><p>02 = Post-facturation/Fermeture du camion</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.avis_expedition">
+<span class="sig-name descname"><span class="pre">avis_expedition</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.avis_expedition" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.format_commandes">
+<span class="sig-name descname"><span class="pre">format_commandes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.format_commandes" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.heure_limite">
+<span class="sig-name descname"><span class="pre">heure_limite</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.heure_limite" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.integration_commande">
+<span class="sig-name descname"><span class="pre">integration_commande</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.integration_commande" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.jours_collecte">
+<span class="sig-name descname"><span class="pre">jours_collecte</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.jours_collecte" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.place_commande">
+<span class="sig-name descname"><span class="pre">place_commande</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.place_commande" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc2.type_connection">
+<span class="sig-name descname"><span class="pre">type_connection</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc2.type_connection" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">DistributorDataBloc3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiche_produit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propo_commandes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commande</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reponse_commandes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avis_exp_v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avis_exp_v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">journal_mvt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reclamation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retour_dde_autorisation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retour_accord_fournisseur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retour_avis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facture_electronique</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demat_facture_fiscale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centralisation_paiements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données pour les fichiers de type distributeur,
+bloc 3, informations complémentaires.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>0 = Non</p></li>
+<li><p>1 = Oui</p></li>
+</ul>
+</div></blockquote>
+<p>Attributs:
+- fiche_produit
+- propo_commandes
+- commande
+- reponse_commandes
+- avis_exp_v1
+- avis_exp_v2
+- journal_mvt
+- reclamation
+- retour_dde_autorisation
+- retour_accord_fournisseur
+- retour_avis
+- facture_electronique
+- demat_facture_fiscale
+- centralisation_paiements</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.avis_exp_v1">
+<span class="sig-name descname"><span class="pre">avis_exp_v1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.avis_exp_v1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.avis_exp_v2">
+<span class="sig-name descname"><span class="pre">avis_exp_v2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.avis_exp_v2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.centralisation_paiements">
+<span class="sig-name descname"><span class="pre">centralisation_paiements</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.centralisation_paiements" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.commande">
+<span class="sig-name descname"><span class="pre">commande</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.commande" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.demat_facture_fiscale">
+<span class="sig-name descname"><span class="pre">demat_facture_fiscale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.demat_facture_fiscale" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.facture_electronique">
+<span class="sig-name descname"><span class="pre">facture_electronique</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.facture_electronique" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.fiche_produit">
+<span class="sig-name descname"><span class="pre">fiche_produit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.fiche_produit" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.journal_mvt">
+<span class="sig-name descname"><span class="pre">journal_mvt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.journal_mvt" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.propo_commandes">
+<span class="sig-name descname"><span class="pre">propo_commandes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.propo_commandes" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.reclamation">
+<span class="sig-name descname"><span class="pre">reclamation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.reclamation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.reponse_commandes">
+<span class="sig-name descname"><span class="pre">reponse_commandes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.reponse_commandes" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.retour_accord_fournisseur">
+<span class="sig-name descname"><span class="pre">retour_accord_fournisseur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.retour_accord_fournisseur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.retour_avis">
+<span class="sig-name descname"><span class="pre">retour_avis</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.retour_avis" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorDataBloc3.retour_dde_autorisation">
+<span class="sig-name descname"><span class="pre">retour_dde_autorisation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorDataBloc3.retour_dde_autorisation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorLineData">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">DistributorLineData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bloc1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bloc2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bloc3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fin_ligne</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorLineData" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données pour une ligne de fichier de type distributeur,
+regroupant les blocs 1, 2 et 3.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorLineData.bloc1">
+<span class="sig-name descname"><span class="pre">bloc1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dilicom_parser.models.distributor.DistributorDataBloc1" title="dilicom_parser.models.distributor.DistributorDataBloc1"><span class="pre">DistributorDataBloc1</span></a></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorLineData.bloc1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorLineData.bloc2">
+<span class="sig-name descname"><span class="pre">bloc2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dilicom_parser.models.distributor.DistributorDataBloc2" title="dilicom_parser.models.distributor.DistributorDataBloc2"><span class="pre">DistributorDataBloc2</span></a></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorLineData.bloc2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorLineData.bloc3">
+<span class="sig-name descname"><span class="pre">bloc3</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dilicom_parser.models.distributor.DistributorDataBloc3" title="dilicom_parser.models.distributor.DistributorDataBloc3"><span class="pre">DistributorDataBloc3</span></a></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorLineData.bloc3" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.DistributorLineData.fin_ligne">
+<span class="sig-name descname"><span class="pre">fin_ligne</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.DistributorLineData.fin_ligne" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.FileDistri">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">FileDistri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">footer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.FileDistri" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure de données pour représenter un fichier de type distributeur reçu de Dilicom.
+Attributs:
+- header: Liste de chaînes représentant les champs d’en-tête du fichier.
+- footer: Chaîne représentant le champ de pied de page du fichier.
+- data: DataFrame contenant les données du fichier, avec les champs organisés en colonnes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.FileDistri.data">
+<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.FileDistri.data" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.FileDistri.footer">
+<span class="sig-name descname"><span class="pre">footer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.distributor.FileDistri.footer" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.FileDistri.header">
+<span class="sig-name descname"><span class="pre">header</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#dilicom_parser.models.distributor.FileDistri.header" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dilicom_parser.models.distributor.df_to_distributor_data">
+<span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.distributor.</span></span><span class="sig-name descname"><span class="pre">df_to_distributor_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distri_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.distributor.df_to_distributor_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Convertit un DataFrame en une instance de DistributorData en utilisant la position des champs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>distri_file</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#dilicom_parser.models.distributor.FileDistri" title="dilicom_parser.models.distributor.FileDistri"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileDistri</span></code></a></span>) – Le FileDistri à convertir.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#dilicom_parser.models.distributor.DistributorData" title="dilicom_parser.models.distributor.DistributorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributorData</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Une instance de DistributorData avec les données du DataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.models.service">
+<span id="dilicom-parser-models-service-module"></span><h2>dilicom_parser.models.service module<a class="headerlink" href="#module-dilicom_parser.models.service" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module de définition des structures de données pour les messages de service Dilicom.
+Couvre les formats GENCOD (CNUT 05003) et EANCOM (APERAK D96A).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomErreur">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">EancomErreur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_erreur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_identification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ZZZ'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libelle_erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.EancomErreur" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Segments ERC + FTX pour les erreurs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomErreur.code_erreur">
+<span class="sig-name descname"><span class="pre">code_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomErreur.code_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomErreur.code_identification">
+<span class="sig-name descname"><span class="pre">code_identification</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ZZZ'</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomErreur.code_identification" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomErreur.libelle_erreur">
+<span class="sig-name descname"><span class="pre">libelle_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomErreur.libelle_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">EancomInterchange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntaxe_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntaxe_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_emetteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_destinataire</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_preparation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heure_preparation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_interchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Un interchange EANCOM complet (UNB…UNZ) contenant N messages.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.date_preparation">
+<span class="sig-name descname"><span class="pre">date_preparation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.date_preparation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.gln_destinataire">
+<span class="sig-name descname"><span class="pre">gln_destinataire</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.gln_destinataire" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.gln_emetteur">
+<span class="sig-name descname"><span class="pre">gln_emetteur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.gln_emetteur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.heure_preparation">
+<span class="sig-name descname"><span class="pre">heure_preparation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.heure_preparation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.messages">
+<span class="sig-name descname"><span class="pre">messages</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dilicom_parser.models.service.EancomServiceMessage" title="dilicom_parser.models.service.EancomServiceMessage"><span class="pre">EancomServiceMessage</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.messages" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.nombre_messages">
+<span class="sig-name descname"><span class="pre">nombre_messages</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.nombre_messages" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.reference_interchange">
+<span class="sig-name descname"><span class="pre">reference_interchange</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.reference_interchange" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.syntaxe_id">
+<span class="sig-name descname"><span class="pre">syntaxe_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.syntaxe_id" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomInterchange.syntaxe_version">
+<span class="sig-name descname"><span class="pre">syntaxe_version</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomInterchange.syntaxe_version" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomNAD">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">EancomNAD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fonction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_identifiant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'9'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.EancomNAD" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Partie identifiée (NAD segment).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomNAD.code_identifiant">
+<span class="sig-name descname"><span class="pre">code_identifiant</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'9'</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomNAD.code_identifiant" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomNAD.fonction">
+<span class="sig-name descname"><span class="pre">fonction</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomNAD.fonction" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomNAD.gln">
+<span class="sig-name descname"><span class="pre">gln</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomNAD.gln" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">EancomServiceMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntaxe_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntaxe_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_emetteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_destinataire</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_preparation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heure_preparation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_interchange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_gs1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identification_document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_acquittement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_creation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_date_creation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_acquittee</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_traitement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_date_traitement</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_lecture</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_date_lecture</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre_segments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Message de service au format EANCOM D96A (APERAK).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.agence">
+<span class="sig-name descname"><span class="pre">agence</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.agence" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.date_creation">
+<span class="sig-name descname"><span class="pre">date_creation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.date_creation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.date_lecture">
+<span class="sig-name descname"><span class="pre">date_lecture</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.date_lecture" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.date_preparation">
+<span class="sig-name descname"><span class="pre">date_preparation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.date_preparation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.date_traitement">
+<span class="sig-name descname"><span class="pre">date_traitement</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.date_traitement" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.erreur">
+<span class="sig-name descname"><span class="pre">erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dilicom_parser.models.service.EancomErreur" title="dilicom_parser.models.service.EancomErreur"><span class="pre">EancomErreur</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.format_date_creation">
+<span class="sig-name descname"><span class="pre">format_date_creation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.format_date_creation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.format_date_lecture">
+<span class="sig-name descname"><span class="pre">format_date_lecture</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.format_date_lecture" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.format_date_traitement">
+<span class="sig-name descname"><span class="pre">format_date_traitement</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.format_date_traitement" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.gln_destinataire">
+<span class="sig-name descname"><span class="pre">gln_destinataire</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.gln_destinataire" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.gln_emetteur">
+<span class="sig-name descname"><span class="pre">gln_emetteur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.gln_emetteur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.heure_preparation">
+<span class="sig-name descname"><span class="pre">heure_preparation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.heure_preparation" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.identification_document">
+<span class="sig-name descname"><span class="pre">identification_document</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.identification_document" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.is_ale">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_ale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.is_ale" title="Lien vers cette définition">¶</a></dt>
+<dd><p>ALE si type AB et date de lecture présente.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.is_ate">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_ate</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.is_ate" title="Lien vers cette définition">¶</a></dt>
+<dd><p>ATE si type AB sans date de lecture.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.is_erreur">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.is_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Erreur si type RE.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.nombre_segments">
+<span class="sig-name descname"><span class="pre">nombre_segments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.nombre_segments" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.parties">
+<span class="sig-name descname"><span class="pre">parties</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dilicom_parser.models.service.EancomNAD" title="dilicom_parser.models.service.EancomNAD"><span class="pre">EancomNAD</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.parties" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.reference_acquittee">
+<span class="sig-name descname"><span class="pre">reference_acquittee</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.reference_acquittee" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.reference_interchange">
+<span class="sig-name descname"><span class="pre">reference_interchange</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.reference_interchange" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.reference_message">
+<span class="sig-name descname"><span class="pre">reference_message</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.reference_message" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.revision">
+<span class="sig-name descname"><span class="pre">revision</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.revision" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.syntaxe_id">
+<span class="sig-name descname"><span class="pre">syntaxe_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.syntaxe_id" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.syntaxe_version">
+<span class="sig-name descname"><span class="pre">syntaxe_version</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.syntaxe_version" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.type_acquittement">
+<span class="sig-name descname"><span class="pre">type_acquittement</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.type_acquittement" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.type_message">
+<span class="sig-name descname"><span class="pre">type_message</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.type_message" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.version">
+<span class="sig-name descname"><span class="pre">version</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.version" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.EancomServiceMessage.version_gs1">
+<span class="sig-name descname"><span class="pre">version_gs1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.EancomServiceMessage.version_gs1" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">GencodCommentaireAleAte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gln_emetteur_origine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnut_message_origine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_cnut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numero_envoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_envoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_destinataire</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_traitement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heure_traitement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_lecture</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heure_lecture</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Commentaires (CNUR 177) pour ATE/ALE - identifiant 904.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.cnut_message_origine">
+<span class="sig-name descname"><span class="pre">cnut_message_origine</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.cnut_message_origine" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.date_envoi">
+<span class="sig-name descname"><span class="pre">date_envoi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.date_envoi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.date_lecture">
+<span class="sig-name descname"><span class="pre">date_lecture</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.date_lecture" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.date_traitement">
+<span class="sig-name descname"><span class="pre">date_traitement</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.date_traitement" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.gln_destinataire">
+<span class="sig-name descname"><span class="pre">gln_destinataire</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.gln_destinataire" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.gln_emetteur_origine">
+<span class="sig-name descname"><span class="pre">gln_emetteur_origine</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.gln_emetteur_origine" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.heure_lecture">
+<span class="sig-name descname"><span class="pre">heure_lecture</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.heure_lecture" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.heure_traitement">
+<span class="sig-name descname"><span class="pre">heure_traitement</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.heure_traitement" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.numero_envoi">
+<span class="sig-name descname"><span class="pre">numero_envoi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.numero_envoi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireAleAte.reference_cnut">
+<span class="sig-name descname"><span class="pre">reference_cnut</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireAleAte.reference_cnut" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">GencodCommentaireErreur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gln_emetteur_origine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnut_message_origine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_cnut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numero_envoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_envoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_destinataire</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_erreur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numero_ligne_erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone_erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libelle_erreur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Commentaires (CNUR 177) pour ANE (905) / AST (906).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.cnut_message_origine">
+<span class="sig-name descname"><span class="pre">cnut_message_origine</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.cnut_message_origine" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.code_erreur">
+<span class="sig-name descname"><span class="pre">code_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.code_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.date_envoi">
+<span class="sig-name descname"><span class="pre">date_envoi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.date_envoi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.gln_destinataire">
+<span class="sig-name descname"><span class="pre">gln_destinataire</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.gln_destinataire" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.gln_emetteur_origine">
+<span class="sig-name descname"><span class="pre">gln_emetteur_origine</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.gln_emetteur_origine" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.libelle_erreur">
+<span class="sig-name descname"><span class="pre">libelle_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.libelle_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.numero_envoi">
+<span class="sig-name descname"><span class="pre">numero_envoi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.numero_envoi" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.numero_ligne_erreur">
+<span class="sig-name descname"><span class="pre">numero_ligne_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.numero_ligne_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.position_erreur">
+<span class="sig-name descname"><span class="pre">position_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.position_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.reference_cnut">
+<span class="sig-name descname"><span class="pre">reference_cnut</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.reference_cnut" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodCommentaireErreur.zone_erreur">
+<span class="sig-name descname"><span class="pre">zone_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodCommentaireErreur.zone_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">GencodServiceMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_destinataire</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gln_emetteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_emission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identificateur_reseau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commentaires</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre_rubriques</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Message de service au format GENCOD (CNUT 05003).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.cnut">
+<span class="sig-name descname"><span class="pre">cnut</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.cnut" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.commentaires">
+<span class="sig-name descname"><span class="pre">commentaires</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dilicom_parser.models.service.GencodCommentaireAleAte" title="dilicom_parser.models.service.GencodCommentaireAleAte"><span class="pre">GencodCommentaireAleAte</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dilicom_parser.models.service.GencodCommentaireErreur" title="dilicom_parser.models.service.GencodCommentaireErreur"><span class="pre">GencodCommentaireErreur</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.commentaires" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.date_emission">
+<span class="sig-name descname"><span class="pre">date_emission</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.date_emission" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.gln_destinataire">
+<span class="sig-name descname"><span class="pre">gln_destinataire</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.gln_destinataire" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.gln_emetteur">
+<span class="sig-name descname"><span class="pre">gln_emetteur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.gln_emetteur" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.identificateur_reseau">
+<span class="sig-name descname"><span class="pre">identificateur_reseau</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.identificateur_reseau" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.is_ale">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_ale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.is_ale" title="Lien vers cette définition">¶</a></dt>
+<dd><p>ALE si type 912 et date de lecture présente dans au moins un commentaire.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.is_ate">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_ate</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.is_ate" title="Lien vers cette définition">¶</a></dt>
+<dd><p>ATE si type 912 sans date de lecture.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.is_erreur">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_erreur</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.is_erreur" title="Lien vers cette définition">¶</a></dt>
+<dd><p>ANE (913) ou AST (914).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.nombre_rubriques">
+<span class="sig-name descname"><span class="pre">nombre_rubriques</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.nombre_rubriques" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.GencodServiceMessage.type_message">
+<span class="sig-name descname"><span class="pre">type_message</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#dilicom_parser.models.service.GencodServiceMessage.type_message" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.OrigineMessageType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">OrigineMessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.OrigineMessageType" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Type du message d’origine.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.OrigineMessageType.AVIS_EXPEDITION">
+<span class="sig-name descname"><span class="pre">AVIS_EXPEDITION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'024'</span></span><a class="headerlink" href="#dilicom_parser.models.service.OrigineMessageType.AVIS_EXPEDITION" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.OrigineMessageType.COMMANDE">
+<span class="sig-name descname"><span class="pre">COMMANDE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'023'</span></span><a class="headerlink" href="#dilicom_parser.models.service.OrigineMessageType.COMMANDE" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.OrigineMessageType.JOURNAL_MOUVEMENTS">
+<span class="sig-name descname"><span class="pre">JOURNAL_MOUVEMENTS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'152'</span></span><a class="headerlink" href="#dilicom_parser.models.service.OrigineMessageType.JOURNAL_MOUVEMENTS" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.ServiceMessageType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.models.service.</span></span><span class="sig-name descname"><span class="pre">ServiceMessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.models.service.ServiceMessageType" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Type de message de service Dilicom.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.ServiceMessageType.ALE">
+<span class="sig-name descname"><span class="pre">ALE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'912'</span></span><a class="headerlink" href="#dilicom_parser.models.service.ServiceMessageType.ALE" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.ServiceMessageType.ANE">
+<span class="sig-name descname"><span class="pre">ANE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'913'</span></span><a class="headerlink" href="#dilicom_parser.models.service.ServiceMessageType.ANE" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.ServiceMessageType.AST">
+<span class="sig-name descname"><span class="pre">AST</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'914'</span></span><a class="headerlink" href="#dilicom_parser.models.service.ServiceMessageType.AST" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dilicom_parser.models.service.ServiceMessageType.ATE">
+<span class="sig-name descname"><span class="pre">ATE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'912'</span></span><a class="headerlink" href="#dilicom_parser.models.service.ServiceMessageType.ATE" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dilicom_parser.models" title="Lien vers cette rubrique">¶</a></h2>
+<p>Modules de modèles de données pour le parser Dilicom.</p>
+<p>Ce module regroupe les classes de modèles de données utilisées pour représenter les différentes
+entités et structures de données rencontrées lors du parsing des fichiers Dilicom,
+tels que les messages de service, les données de distributeurs, etc.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dilicom-parser</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Rémi Verschuur | Audit IO.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/dilicom_parser.models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

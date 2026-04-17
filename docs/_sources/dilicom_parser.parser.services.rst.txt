@@ -1,0 +1,29 @@
+dilicom\_parser.parser.services package
+=======================================
+
+Submodules
+----------
+
+dilicom\_parser.parser.services.eancom module
+---------------------------------------------
+
+.. automodule:: dilicom_parser.parser.services.eancom
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.parser.services.gencod module
+---------------------------------------------
+
+.. automodule:: dilicom_parser.parser.services.gencod
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: dilicom_parser.parser.services
+   :members:
+   :show-inheritance:
+   :undoc-members:

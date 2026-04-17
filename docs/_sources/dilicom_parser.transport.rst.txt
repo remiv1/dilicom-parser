@@ -1,0 +1,45 @@
+dilicom\_parser.transport package
+=================================
+
+Submodules
+----------
+
+dilicom\_parser.transport.config module
+---------------------------------------
+
+.. automodule:: dilicom_parser.transport.config
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.transport.connector module
+------------------------------------------
+
+.. automodule:: dilicom_parser.transport.connector
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.transport.decorators module
+-------------------------------------------
+
+.. automodule:: dilicom_parser.transport.decorators
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.transport.exceptions module
+-------------------------------------------
+
+.. automodule:: dilicom_parser.transport.exceptions
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: dilicom_parser.transport
+   :members:
+   :show-inheritance:
+   :undoc-members:

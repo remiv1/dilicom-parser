@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dilicom_parser.utils package &#8212; Documentation dilicom-parser 0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=bf78f4d7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="dilicom-parser-utils-package">
+<h1>dilicom_parser.utils package<a class="headerlink" href="#dilicom-parser-utils-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+<section id="module-dilicom_parser.utils.alignment">
+<span id="dilicom-parser-utils-alignment-module"></span><h2>dilicom_parser.utils.alignment module<a class="headerlink" href="#module-dilicom_parser.utils.alignment" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module d’alignement des données pour les dataclasses du distributeur</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dilicom_parser.utils.alignment.fix_alignment">
+<span class="sig-prename descclassname"><span class="pre">dilicom_parser.utils.alignment.</span></span><span class="sig-name descname"><span class="pre">fix_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_len</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.utils.alignment.fix_alignment" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Ajuste l’alignement d’une ligne de données en fonction de la longueur attendue.
+Si la ligne a plus de valeurs que prévu, les valeurs excédentaires sont ignorées.
+Si la ligne a moins de valeurs que prévu, des valeurs None sont ajoutées pour compléter la ligne</p>
+<p>Args:
+- row: La ligne de données à ajuster (pandas Series ou liste).
+- expected_len: La longueur attendue de la ligne après ajustement.
+Returns:
+- La ligne de données ajustée avec la longueur attendue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.utils.exceptions">
+<span id="dilicom-parser-utils-exceptions-module"></span><h2>dilicom_parser.utils.exceptions module<a class="headerlink" href="#module-dilicom_parser.utils.exceptions" title="Lien vers cette rubrique">¶</a></h2>
+<p>Exceptions et avertissements du parseur Dilicom.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="dilicom_parser.utils.exceptions.SegmentInconnuWarning">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.utils.exceptions.</span></span><span class="sig-name descname"><span class="pre">SegmentInconnuWarning</span></span><a class="headerlink" href="#dilicom_parser.utils.exceptions.SegmentInconnuWarning" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></p>
+<p>Avertissement levé lorsqu’un segment ou un qualificatif inattendu est
+rencontré pendant le parsing.</p>
+<p>Ce warning ne bloque pas le parsing : les données connues sont extraites
+normalement, le segment ou la valeur inconnue est ignoré(e). Il permet
+néanmoins à l’appelant d’être alerté d’une dérive éventuelle du format.</p>
+<p>Utilisation typique :</p>
+<blockquote>
+<div><p>import warnings
+from dilicom_parser.utils.exceptions import SegmentInconnuWarning</p>
+<p># Transformer le warning en erreur (mode strict) :
+warnings.filterwarnings(« error », category=SegmentInconnuWarning)</p>
+<p># Rediriger vers le système de logging :
+logging.captureWarnings(True)</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dilicom_parser.utils" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dilicom-parser</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Rémi Verschuur | Audit IO.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/dilicom_parser.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

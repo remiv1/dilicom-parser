@@ -1,0 +1,29 @@
+dilicom\_parser.utils package
+=============================
+
+Submodules
+----------
+
+dilicom\_parser.utils.alignment module
+--------------------------------------
+
+.. automodule:: dilicom_parser.utils.alignment
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+dilicom\_parser.utils.exceptions module
+---------------------------------------
+
+.. automodule:: dilicom_parser.utils.exceptions
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: dilicom_parser.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dilicom_parser.parser package &#8212; Documentation dilicom-parser 0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=bf78f4d7"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="dilicom-parser-parser-package">
+<h1>dilicom_parser.parser package<a class="headerlink" href="#dilicom-parser-parser-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Lien vers cette rubrique">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.parser.services.html">dilicom_parser.parser.services package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.parser.services.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.parser.services.html#module-dilicom_parser.parser.services.eancom">dilicom_parser.parser.services.eancom module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dilicom_parser.parser.services.html#dilicom_parser.parser.services.eancom.parse_eancom"><code class="docutils literal notranslate"><span class="pre">parse_eancom()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.parser.services.html#module-dilicom_parser.parser.services.gencod">dilicom_parser.parser.services.gencod module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dilicom_parser.parser.services.html#dilicom_parser.parser.services.gencod.parse_gencod_lines"><code class="docutils literal notranslate"><span class="pre">parse_gencod_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.parser.services.html#module-dilicom_parser.parser.services">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+<section id="module-dilicom_parser.parser.distributor_parser">
+<span id="dilicom-parser-parser-distributor-parser-module"></span><h2>dilicom_parser.parser.distributor_parser module<a class="headerlink" href="#module-dilicom_parser.parser.distributor_parser" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module de parsing des fichiers distributeurs Dilicom.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.distributor_parser.</span></span><span class="sig-name descname"><span class="pre">DistributorParser</span></span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Classe de service pour le parsing des fichiers reçus de Dilicom.
+Cette classe est responsable de :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Lire les fichiers depuis un répertoire spécifié.</p></li>
+<li><p>Déterminer le type de fichier en fonction de son en-tête.</p></li>
+<li><p>Extraire les données pertinentes en fonction du type de fichier.</p></li>
+<li><p>Stocker les données extraites dans des structures de données appropriées.</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Attributs :</dt><dd><ul class="simple">
+<li><p>directory : Path - Le répertoire où les fichiers sont stockés.</p></li>
+<li><p>data : Optional[pd.DataFrame] - Les données extraites du fichier.</p></li>
+<li><p>file_path : Optional[Path] - Le chemin complet du fichier en cours de traitement.</p></li>
+<li><p>filename : str - Le nom du fichier en cours de traitement.</p></li>
+<li><p>distributor_data : Optional[DistributorData] - Les données du distributeur extraites.</p></li>
+</ul>
+</dd>
+<dt>Méthodes :</dt><dd><ul class="simple">
+<li><p>__init__() : Initialise les attributs de la classe et crée le répertoire s’il n’existe pas.</p></li>
+<li><p>__define_file_type(header: List[str]) -&gt; str : Détermine le type en fonction de son en-tête.</p></li>
+<li><dl class="simple">
+<dt>__parse_distrib(file_distri: FileDistri) -&gt; None<span class="classifier">Parse les fichiers de type “supplier”</span></dt><dd><p>et extrait les données.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>__get_header_footer_and_data() -&gt; FileDistri<span class="classifier">Lit le fichier et retourne l’en-tête,</span></dt><dd><p>le pied de page et les données.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>parse_file(filename: str) -&gt; None<span class="classifier">Parse le fichier en fonction de son type et extrait</span></dt><dd><p>les données.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser.parse_file">
+<span class="sig-name descname"><span class="pre">parse_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser.parse_file" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Parse le fichier en fonction de son type et extrait les données.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Le nom du fichier à parser.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.parser.service_parser">
+<span id="dilicom-parser-parser-service-parser-module"></span><h2>dilicom_parser.parser.service_parser module<a class="headerlink" href="#module-dilicom_parser.parser.service_parser" title="Lien vers cette rubrique">¶</a></h2>
+<p>Module de parsing des fichiers de messages de service Dilicom.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.service_parser.</span></span><span class="sig-name descname"><span class="pre">ServiceParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parseur pour les fichiers de messages de service (ATE/ALE/ANE/AST).
+- Détecte automatiquement le format du fichier (GENCOD/EANCOM) et utilise le parseur approprié.
+- Les messages GENCOD sont stockés dans une liste de GencodServiceMessage.
+- Les messages EANCOM sont stockés dans une instance d’EancomInterchange.</p>
+<ul class="simple">
+<li><p>ATE : Accusé de réception technique</p></li>
+<li><p>ALE : Accusé de réception logistique</p></li>
+<li><p>ANE : Accusé de réception d’erreur</p></li>
+<li><p>AST : Accusé de réception de statut</p></li>
+</ul>
+<p>Supporte les formats :
+- GENCOD (CNUT 05003) : fichiers à plat séparés par “;”
+- EANCOM D96A (APERAK) : fichiers EDIFACT</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser.parse_content">
+<span class="sig-name descname"><span class="pre">parse_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser.parse_content" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Parse du contenu brut de message de service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Contenu brut du fichier.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.GencodServiceMessage" title="dilicom_parser.models.service.GencodServiceMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">GencodServiceMessage</span></code></a>] | <a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.EancomInterchange" title="dilicom_parser.models.service.EancomInterchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">EancomInterchange</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Liste de GencodServiceMessage pour du GENCOD</p></li>
+<li><p>EancomInterchange pour de l’EANCOM</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser.parse_file">
+<span class="sig-name descname"><span class="pre">parse_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser.parse_file" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lit et parse un fichier de message de service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Nom du fichier à parser dans le répertoire configuré.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.GencodServiceMessage" title="dilicom_parser.models.service.GencodServiceMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">GencodServiceMessage</span></code></a>] | <a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.EancomInterchange" title="dilicom_parser.models.service.EancomInterchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">EancomInterchange</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Liste de GencodServiceMessage pour un fichier GENCOD</p></li>
+<li><p>EancomInterchange pour un fichier EANCOM</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dilicom_parser.parser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dilicom_parser.parser" title="Lien vers cette rubrique">¶</a></h2>
+<p>Modules de modèles de données pour le parser Dilicom.
+Ce module regroupe les classes de modèles de données utilisées pour représenter les différentes
+entités et structures de données rencontrées lors du parsing des fichiers Dilicom,
+tels que les messages de service, les données de distributeurs, etc.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dilicom-parser</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Rémi Verschuur | Audit IO.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/dilicom_parser.parser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
