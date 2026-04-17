@@ -47,3 +47,15 @@
 - Problem during distributors file parsing fixed.
 - Problem to add a specific env file during Connector initialization fixed.
 - Using the folder of the .env file to download the files from the SFTP server fixed.
+
+## [0.2.2] - 2026-4-17
+
+### Fixed 2026-4-17 (2)
+
+- Accept used with Python 3.14+ fixed.
+
+## [0.2.3] - 2026-4-17
+
+### Fixed 2026-4-17 (3)
+
+- Problem with parsing distributors files if complete path is given fixed.

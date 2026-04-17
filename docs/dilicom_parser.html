@@ -15,6 +15,8 @@
     <script src="_static/translations.js?v=e6b791cb"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="dilicom_parser.models package" href="dilicom_parser.models.html" />
+    <link rel="prev" title="dilicom-parser" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -403,13 +405,14 @@ Cette classe est responsable de :</p>
 <dd><p>Parse le fichier en fonction de son type et extrait les données.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Le nom du fichier à parser.</p>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – Le nom du fichier à parser ou un objet Path.</p>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Les données extraites du fichier,
+ou None si le parsing échoue.</p>
 </dd>
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.distributor.DistributorData" title="dilicom_parser.models.distributor.DistributorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributorData</span></code></a> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -445,11 +448,26 @@ Cette classe est responsable de :</p>
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dilicom_parser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dilicom_parser">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.models.html">dilicom_parser.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.parser.html">dilicom_parser.parser package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.parser.services.html">dilicom_parser.parser.services package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.transport.html">dilicom_parser.transport package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dilicom_parser.utils.html">dilicom_parser.utils package</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="Chapitre précédent">dilicom-parser</a></li>
+      <li>Next: <a href="dilicom_parser.models.html" title="Chapitre suivant">dilicom_parser.models package</a></li>
   </ul></li>
 </ul>
 </div>

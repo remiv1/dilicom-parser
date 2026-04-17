@@ -72,8 +72,8 @@ class DistributorParser:
             logger.error(message)
             raise ValueError(message)
         match header[1]:
-            case t if any(t.startswith(k) for k in headers_and_types):
-                file_type = next(v for k, v in headers_and_types.items() if t.startswith(k))
+            case t if any(k in t for k in headers_and_types):
+                file_type = next(v for k, v in headers_and_types.items() if k in t)
                 logger.debug(
                     "En-tête reconnu: %s, type de fichier: %s",
                     header[1],
@@ -112,7 +112,11 @@ class DistributorParser:
         Returns:
             FileDistri: Un objet contenant l'en-tête, le pied de page et les données du fichier.
         """
-        _file_to_read = Path(self.directory / self.filename)
+        _file_to_read = self.file_path
+        if _file_to_read is None:
+            message = "Aucun fichier spécifié pour la lecture."
+            logger.error(message)
+            raise ValueError(message)
         with _file_to_read.open("r", encoding="cp1252", newline="") as f:
             lines = f.readlines()
             header = lines[0].strip().split(";")
@@ -127,20 +131,25 @@ class DistributorParser:
         )
         return FileDistri(header, footer, df)
 
-    def parse_file(self, filename: str) -> None:
+    def parse_file(self, filename: str | Path) -> Optional[DistributorData]:
         """
         Parse le fichier en fonction de son type et extrait les données.
 
         Args:
-            filename (str): Le nom du fichier à parser.
+            filename (str | Path): Le nom du fichier à parser ou un objet Path.
         Returns:
-            None
+            Optional[DistributorData]: Les données extraites du fichier,
+            ou None si le parsing échoue.
         """
         parsers = {
             "supplier": self.__parse_distrib,
         }
-        self.filename = filename
-        self.file_path = self.directory / filename
+        if isinstance(filename, str):
+            self.filename = filename
+            self.file_path = self.directory / filename
+        else:
+            self.file_path = filename
+            self.filename = filename.name
         distri_file = self.__get_header_footer_and_data()
         file_type = self.__define_file_type(distri_file.header)
         logger.debug("Type de fichier déterminé: %s", file_type)
@@ -152,3 +161,4 @@ class DistributorParser:
                 "Type de fichier inconnu pour l'en-tête: %s. Aucun parsing effectué.",
                 distri_file.header[1],
             )
+        return self.distributor_data
