@@ -3,15 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-dilicom-parser documentation
-============================
+dilicom-parser
+==============
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Bibliothèque souveraine pour parser les fichiers Dilicom.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Documentation
 
+   dilicom_parser
+   dilicom_parser.models
+   dilicom_parser.parser
+   dilicom_parser.parser.services
+   dilicom_parser.transport
+   dilicom_parser.utils
