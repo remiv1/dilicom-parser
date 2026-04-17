@@ -22,13 +22,14 @@ class Connector:
     """
     Repository pour les opérations liées à Dilicom.
     Attributes:
-        direction (str): La direction de l'opération, par défaut "put".
+        timeout (int):
+            Timeout pour la connexion SFTP.
+        env_path (Optional[str]):
+            Chemin vers le fichier d'environnement pour la configuration de Dilicom.
     """
 
-    def __init__(self, timeout: int = 30):
-        self.config: DilicomConfig = (
-            load_dilicom_config()
-        )  # Charger la configuration de Dilicom
+    def __init__(self, *, timeout: int = 30, env_path: Optional[str] = None):
+        self.config: DilicomConfig = load_dilicom_config(env_path=env_path)
         self.timeout = timeout  # Timeout pour la connexion SFTP
         self.client = None  # Client SSH pour la connexion SFTP
         self.transport = None  # Transport SSH pour la connexion SFTP
@@ -221,13 +222,41 @@ class Connector:
             logger.error(message)
             raise DilicomSFTPError(message) from e
 
+    def _create_archive_path(self, remote_path: str, archive: bool) -> Path:
+        """
+        Crée le chemin d'archive pour un fichier donné.
+
+        Args:
+            remote_path (str): Le chemin distant du fichier.
+        Returns:
+            Path: Le chemin d'archive correspondant.
+        """
+        if archive:
+            path_to_return = (
+                Path("./ARC") / remote_path
+                if not str(remote_path).startswith("./")
+                else remote_path
+            )
+            path_to_return = (
+                Path(path_to_return).with_suffix(".rdy")
+                if Path(path_to_return).suffix != ".rdy"
+                else Path(path_to_return)
+            )
+        else:
+            path_to_return = (
+                Path("./O") / remote_path
+                if not str(remote_path).startswith("./")
+                else Path(remote_path)
+            )
+        return path_to_return
+
     @retry_sftp
     def download(
         self,
         remote_path: str | Path,
         local_path: Optional[str | Path] = None,
         archive: bool = False,
-    ) -> None:
+    ) -> Path:
         """
         Télécharge un fichier depuis le serveur SFTP de Dilicom.
 
@@ -250,25 +279,10 @@ class Connector:
             logger.error(message)
             raise DilicomConnectionError(message)
         try:
-            remote_path = Path(remote_path)
-            filename = remote_path.name
-            if archive:
-                remote_path = (
-                    Path("./ARC") / remote_path
-                    if not str(remote_path).startswith("./")
-                    else remote_path
-                )
-                remote_path = (
-                    remote_path.with_suffix(".rdy")
-                    if remote_path.suffix != ".rdy"
-                    else remote_path
-                )
-            else:
-                remote_path = (
-                    Path("./O") / remote_path
-                    if not str(remote_path).startswith("./")
-                    else remote_path
-                )
+            filename = remote_path.name if isinstance(remote_path, Path) else Path(remote_path).name
+            remote_path = self._create_archive_path(remote_path, archive) \
+                                if isinstance(remote_path, str) \
+                                else remote_path
 
             # Si l'utilisateur a fourni un répertoire local (ou '.'), écrire le fichier
             # sous ce répertoire en gardant le nom distant.
@@ -313,6 +327,7 @@ class Connector:
                 self.config.port,
                 len(content),
             )
+            return local_file
         except FileNotFoundError as e:
             message = f"Le fichier distant '{remote_path}' n'existe pas pour le téléchargement."
             logger.error(message)
@@ -325,62 +340,95 @@ class Connector:
             logger.error(message)
             raise DilicomSFTPError(message) from e
 
-    def list_files(
-        self, remote_path: str = ".", complete: bool = False
-    ) -> List[str] | List[RemoteFile]:
+    def download_all(
+            self,
+            local_dir: Optional[str | Path] = None,
+            archive: bool = False
+        ) -> List[Path]:
+        """
+        Télécharge tous les fichiers d'un répertoire du serveur vers un répertoire local.
+        Args:
+            local_dir (Optional[str | Path]): Le chemin local du répertoire de téléchargement.
+                                               Par défaut, le dossier d'entrée configuré.
+            archive (bool): Indique si les fichiers sont archivés.
+                            Par défaut, False.
+        Returns:
+            List[Path]: Une liste des chemins locaux des fichiers téléchargés.
+        Raises:
+            DilicomConnectionError: Si la connexion SFTP n'est pas établie.
+            DilicomSFTPError: Si une erreur survient lors du téléchargement des fichiers.
+        """
+        local_dir = Path(local_dir) if local_dir else self.config.in_folder
+        remote_dir = "./ARC" if archive else "./O"
+        if not self.sftp:
+            message = DilicomConnectionError().stdr_message()
+            logger.error(message)
+            raise DilicomConnectionError(message)
+        try:
+            remote_files = self.list_files(remote_dir)
+            local_files: List[Path] = []
+            for remote_file in remote_files:
+                local_file = self.download(
+                    remote_path=Path(remote_dir) / remote_file.filename,
+                    local_path=local_dir,
+                )
+                local_files.append(local_file)
+            return local_files
+        except Exception as e:
+            message = (
+                f"Erreur lors du téléchargement de tous les fichiers du répertoire "
+                f"'{remote_dir}' vers '{local_dir}' depuis le serveur SFTP de Dilicom: {e}"
+            )
+            logger.error(message)
+            raise DilicomSFTPError(message) from e
+
+    def list_files(self, remote_path: str = ".") -> List[RemoteFile]:
         """Liste les fichiers présents dans un répertoire du serveur SFTP de Dilicom.
         Args:
             remote_path (str): Le chemin distant du répertoire à lister.
-            complete (bool): Si True, retourne les attributs complets des fichiers
-                                (nom, chemin, taille, date de modification).
-                             Si False, retourne uniquement les noms de fichiers.
         Returns:
-            List[str] | List[RemoteFile]:
-                - Une liste des noms de fichiers présents dans le répertoire ou
-                - Une liste d'objets RemoteFile si complete est True.
+            List[RemoteFile]: Une liste d'objets RemoteFile représentant les fichiers.
         """
         if not self.sftp:
             message = DilicomConnectionError().stdr_message()
             logger.error(message)
             raise DilicomConnectionError(message)
         try:
-            if complete:
-                remotefiles: list[RemoteFile] = []
-                for attr in self.sftp.listdir_attr(remote_path):
-                    filename = attr.filename
-                    filepath = f"{remote_path}/{filename}"
-                    size = attr.st_size
-                    int_modified_time = attr.st_mtime
-                    if int_modified_time:
-                        modified_time = datetime.fromtimestamp(int_modified_time)
-                    else:
-                        modified_time = None
-                    remotefiles.append(
-                        RemoteFile(
-                            filename=filename,
-                            filepath=filepath,
-                            size=size,
-                            modified_time=modified_time,
-                        )
+            remotefiles: list[RemoteFile] = []
+            for attr in self.sftp.listdir_attr(remote_path):
+                filename = attr.filename
+                filepath = f"{remote_path}/{filename}"
+                size = attr.st_size
+                int_modified_time = attr.st_mtime
+                if int_modified_time:
+                    modified_time = datetime.fromtimestamp(int_modified_time)
+                else:
+                    modified_time = None
+                remotefiles.append(
+                    RemoteFile(
+                        filename=filename,
+                        filepath=filepath,
+                        size=size,
+                        modified_time=modified_time,
                     )
-                logger.info(
-                    "Fichier listés, répertoire '%s', serveur '%s:%s', nb_fichiers = %d",
-                    remote_path,
-                    self.config.host,
-                    self.config.port,
-                    len(remotefiles),
                 )
-                logger.debug(
-                    "Fichiers listés, répertoire '%s', serveur '%s:%s', "
-                    + "nb_fichiers = %d, fichiers = %s",
-                    remote_path,
-                    self.config.host,
-                    self.config.port,
-                    len(remotefiles),
-                    [str(f) for f in remotefiles],
-                )
-                return remotefiles
-            return self.sftp.listdir(remote_path)
+            logger.info(
+                "Fichier listés, répertoire '%s', serveur '%s:%s', nb_fichiers = %d",
+                remote_path,
+                self.config.host,
+                self.config.port,
+                len(remotefiles),
+            )
+            logger.debug(
+                "Fichiers listés, répertoire '%s', serveur '%s:%s', "
+                + "nb_fichiers = %d, fichiers = %s",
+                remote_path,
+                self.config.host,
+                self.config.port,
+                len(remotefiles),
+                [str(f) for f in remotefiles],
+            )
+            return remotefiles
         except FileNotFoundError as e:
             message = f"Le répertoire distant '{remote_path}' n'existe pas sur le serveur SFTP."
             logger.error(message)

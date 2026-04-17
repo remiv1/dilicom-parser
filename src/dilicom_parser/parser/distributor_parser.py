@@ -73,12 +73,13 @@ class DistributorParser:
             raise ValueError(message)
         match header[1]:
             case t if any(t.startswith(k) for k in headers_and_types):
+                file_type = next(v for k, v in headers_and_types.items() if t.startswith(k))
                 logger.debug(
                     "En-tête reconnu: %s, type de fichier: %s",
                     header[1],
-                    headers_and_types[t],
+                    file_type,
                 )
-                return next(v for k, v in headers_and_types.items() if t.startswith(k))
+                return file_type
             case _:
                 logger.warning(
                     "En-tête non reconnu: %s. Type de fichier inconnu.", header[1]
