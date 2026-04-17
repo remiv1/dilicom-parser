@@ -7,9 +7,25 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dependencies = ["pandas", "paramiko", "python-dotenv"]
+keywords = ["dilicom", "livres", "édition", "ONIX", "SFTP", "EDI", "distribution"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Booksellers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Natural Language :: French",
+]
 
 [project.urls]
 Homepage = "https://github.com/remiv1/dilicom-parser"
+Repository = "https://github.com/remiv1/dilicom-parser"
+Changelog = "https://github.com/remiv1/dilicom-parser/blob/main/CHANGELOG.md"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
