@@ -26,12 +26,13 @@ class Connector:
     """
 
     def __init__(self, timeout: int = 30):
-        self.config: DilicomConfig = load_dilicom_config()  # Charger la configuration de Dilicom
+        self.config: DilicomConfig = (
+            load_dilicom_config()
+        )  # Charger la configuration de Dilicom
         self.timeout = timeout  # Timeout pour la connexion SFTP
         self.client = None  # Client SSH pour la connexion SFTP
         self.transport = None  # Transport SSH pour la connexion SFTP
         self.sftp = None  # Client SFTP
-
 
     def __str__(self):
         return (
@@ -42,7 +43,6 @@ class Connector:
             f"    password={'****' if self.config.password else None}>"
         )
 
-
     def __repr__(self):
         return (
             f"<Connector("
@@ -51,11 +51,9 @@ class Connector:
             f"port={self.config.port!r})>"
         )
 
-
     def print_config(self) -> None:
         """Affiche la configuration de Dilicom utilisée par le repository."""
         print(self.config)
-
 
     def connect(self) -> None:
         """Établit une connexion au serveur SFTP de Dilicom."""
@@ -63,8 +61,13 @@ class Connector:
             # 1. client SSH
             self.client = paramiko.SSHClient()
             self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            logger.debug("Initialisation SSH, host:port = %s:%s, user = %s, timeout = %s secondes",
-                         self.config.host, self.config.port, self.config.username, self.timeout)
+            logger.debug(
+                "Initialisation SSH, host:port = %s:%s, user = %s, timeout = %s secondes",
+                self.config.host,
+                self.config.port,
+                self.config.username,
+                self.timeout,
+            )
             # 2. connection SSH
             self.client.connect(
                 hostname=self.config.host,
@@ -77,24 +80,40 @@ class Connector:
                 banner_timeout=self.timeout,
                 auth_timeout=self.timeout,
             )
-            logger.debug("Connexion SSH réussie, host:port = %s:%s, user = %s",
-                         self.config.host, self.config.port, self.config.username)
+            logger.debug(
+                "Connexion SSH réussie, host:port = %s:%s, user = %s",
+                self.config.host,
+                self.config.port,
+                self.config.username,
+            )
             # 3. récupération du transport SSH
             self.transport = self.client.get_transport()
             if self.transport is None:
-                raise DilicomConnectionError("Transport SSH indisponible pour la connexion SFTP.")
+                raise DilicomConnectionError(
+                    "Transport SSH indisponible pour la connexion SFTP."
+                )
             opts = self.transport.get_security_options()
             # 4. forcer les algorithmes legacy encore utilisés par Dilicom
             opts.kex = ["diffie-hellman-group1-sha1"]
             opts.ciphers = ["aes128-cbc", "3des-cbc"]
             opts.digests = ["hmac-sha1"]
             opts.key_types = ["ssh-rsa"]
-            logger.debug("Transport SSH établi, host:port = %s:%s, useur = %s, " + \
-                         "algo_KEX_dispo = %s, algo_chiffr_dispo = %s", self.config.host,
-                         self.config.port, self.config.username, opts.kex, opts.ciphers)
+            logger.debug(
+                "Transport SSH établi, host:port = %s:%s, useur = %s, "
+                + "algo_KEX_dispo = %s, algo_chiffr_dispo = %s",
+                self.config.host,
+                self.config.port,
+                self.config.username,
+                opts.kex,
+                opts.ciphers,
+            )
             # 5. ouverture du client SFTP
             self.sftp = self.client.open_sftp()
-            logger.info("Connexion réussie, host:port = %s:%s", self.config.host, self.config.port)
+            logger.info(
+                "Connexion réussie, host:port = %s:%s",
+                self.config.host,
+                self.config.port,
+            )
         except paramiko.AuthenticationException as e:
             message = f"Erreur d'authentification SSH : {e}"
             logger.exception(message)
@@ -108,14 +127,16 @@ class Connector:
             logger.error(message)
             raise DilicomConnectionError(message) from e
 
-
     def close(self) -> None:
         """Ferme la connexion au serveur SFTP de Dilicom."""
         if self.sftp:
             try:
                 self.sftp.close()
-                logger.info("Client SFTP fermé avec succès, host:port = %s:%s",
-                            self.config.host, self.config.port)
+                logger.info(
+                    "Client SFTP fermé avec succès, host:port = %s:%s",
+                    self.config.host,
+                    self.config.port,
+                )
             except Exception as e:
                 message = f"Erreur lors de la fermeture du client SFTP de Dilicom: {e}"
                 logger.error(message)
@@ -124,8 +145,11 @@ class Connector:
         if self.client:
             try:
                 self.client.close()
-                logger.info("Client SSH fermé avec succès, host:port = %s:%s",
-                            self.config.host, self.config.port)
+                logger.info(
+                    "Client SSH fermé avec succès, host:port = %s:%s",
+                    self.config.host,
+                    self.config.port,
+                )
             except Exception as e:
                 message = f"Erreur lors de la fermeture du client SSH de Dilicom: {e}"
                 logger.exception(message)
@@ -134,7 +158,6 @@ class Connector:
         self.sftp = None
         self.client = None
         self.transport = None
-
 
     @retry_sftp
     def upload(self, local_path: str, remote_path: str) -> None:
@@ -151,18 +174,22 @@ class Connector:
             raise DilicomConnectionError(message)
         try:
             self.sftp.put(local_path, remote_path)
-            logger.info("Fichier '%s' téléchargé vers '%s' sur le serveur SFTP",
-                        local_path, remote_path)
+            logger.info(
+                "Fichier '%s' téléchargé vers '%s' sur le serveur SFTP",
+                local_path,
+                remote_path,
+            )
         except FileNotFoundError as e:
             message = f"Le fichier local '{local_path}' n'existe pas."
             logger.error(message)
             raise DilicomSFTPError(message) from e
         except Exception as e:
-            message = f"Erreur de téléchargement de '{local_path}' vers " \
-                      f"'{remote_path}' sur le serveur SFTP de Dilicom: {e}"
+            message = (
+                f"Erreur de téléchargement de '{local_path}' vers "
+                f"'{remote_path}' sur le serveur SFTP de Dilicom: {e}"
+            )
             logger.error(message)
             raise DilicomSFTPError(message) from e
-
 
     @retry_sftp
     def upload_from_memory(self, content: str | bytes, remote_path: str) -> None:
@@ -178,25 +205,29 @@ class Connector:
             logger.error(message)
             raise DilicomConnectionError(message)
         try:
-            with self.sftp.file(remote_path, 'w') as remote_file:
+            with self.sftp.file(remote_path, "w") as remote_file:
                 if isinstance(content, str):
-                    content = content.encode('utf-8')
+                    content = content.encode("utf-8")
                 remote_file.write(content)
-            logger.info("Contenu téléchargé vers '%s' sur le serveur SFTP de Dilicom",
-                        remote_path)
+            logger.info(
+                "Contenu téléchargé vers '%s' sur le serveur SFTP de Dilicom",
+                remote_path,
+            )
         except Exception as e:
-            message = f"Erreur lors du téléchargement de contenu vers '{remote_path}' " \
-                      f"sur le serveur SFTP de Dilicom: {e}"
+            message = (
+                f"Erreur lors du téléchargement de contenu vers '{remote_path}' "
+                f"sur le serveur SFTP de Dilicom: {e}"
+            )
             logger.error(message)
             raise DilicomSFTPError(message) from e
 
-
     @retry_sftp
     def download(
-        self, remote_path: str | Path,
+        self,
+        remote_path: str | Path,
         local_path: Optional[str | Path] = None,
-        archive: bool = False
-        ) -> None:
+        archive: bool = False,
+    ) -> None:
         """
         Télécharge un fichier depuis le serveur SFTP de Dilicom.
 
@@ -212,7 +243,7 @@ class Connector:
             DilicomConnectionError: Si la connexion SFTP n'est pas établie.
             DilicomSFTPError: Si une erreur survient lors du téléchargement du fichier.
         """
-        local_path = Path(local_path) if local_path else Path('./')
+        local_path = Path(local_path) if local_path else Path("./")
         local_file: Path | None = None
         if not self.sftp:
             message = DilicomConnectionError().stdr_message()
@@ -222,20 +253,28 @@ class Connector:
             remote_path = Path(remote_path)
             filename = remote_path.name
             if archive:
-                remote_path = Path('./ARC') / remote_path \
-                                if not str(remote_path).startswith('./') \
-                                else remote_path
-                remote_path = remote_path.with_suffix('.rdy') \
-                                if remote_path.suffix != '.rdy' \
-                                else remote_path
+                remote_path = (
+                    Path("./ARC") / remote_path
+                    if not str(remote_path).startswith("./")
+                    else remote_path
+                )
+                remote_path = (
+                    remote_path.with_suffix(".rdy")
+                    if remote_path.suffix != ".rdy"
+                    else remote_path
+                )
             else:
-                remote_path = Path('./O') / remote_path \
-                                if not str(remote_path).startswith('./') \
-                                else remote_path
+                remote_path = (
+                    Path("./O") / remote_path
+                    if not str(remote_path).startswith("./")
+                    else remote_path
+                )
 
             # Si l'utilisateur a fourni un répertoire local (ou '.'), écrire le fichier
             # sous ce répertoire en gardant le nom distant.
-            local_file_name = f"{filename}.csv" if not filename.endswith('.csv') else filename
+            local_file_name = (
+                f"{filename}.csv" if not filename.endswith(".csv") else filename
+            )
             local_file = local_path / local_file_name
 
             # créer le répertoire parent si nécessaire
@@ -248,28 +287,47 @@ class Connector:
             self.sftp.get(str(remote_path), str(local_file))
 
             # lire le contenu téléchargé (retourné au caller)
-            with open(local_file, 'rb') as f:
+            with open(local_file, "rb") as f:
                 content = f.read()
-            txt_debug = "Fichier '%s' téléchargé vers '%s' depuis '%s:%s' " + \
-                        "(size = %d octets, content preview = %s)"
-            txt_info = "Fichier '%s' téléchargé vers '%s' depuis '%s:%s' (size = %d octets)"
-            logger.debug(txt_debug, remote_path, local_file, self.config.host, self.config.port,
-                         len(content), content[:100])
-            logger.info(txt_info, remote_path, local_file, self.config.host, self.config.port,
-                        len(content))
+            txt_debug = (
+                "Fichier '%s' téléchargé vers '%s' depuis '%s:%s' "
+                + "(size = %d octets, content preview = %s)"
+            )
+            txt_info = (
+                "Fichier '%s' téléchargé vers '%s' depuis '%s:%s' (size = %d octets)"
+            )
+            logger.debug(
+                txt_debug,
+                remote_path,
+                local_file,
+                self.config.host,
+                self.config.port,
+                len(content),
+                content[:100],
+            )
+            logger.info(
+                txt_info,
+                remote_path,
+                local_file,
+                self.config.host,
+                self.config.port,
+                len(content),
+            )
         except FileNotFoundError as e:
             message = f"Le fichier distant '{remote_path}' n'existe pas pour le téléchargement."
             logger.error(message)
             raise DilicomSFTPError(message) from e
         except Exception as e:
-            message = f"Erreur lors du téléchargement du fichier '{remote_path}' vers " \
-                      f"'{local_path}' depuis le serveur SFTP de Dilicom: {e}"
+            message = (
+                f"Erreur lors du téléchargement du fichier '{remote_path}' vers "
+                f"'{local_path}' depuis le serveur SFTP de Dilicom: {e}"
+            )
             logger.error(message)
             raise DilicomSFTPError(message) from e
 
-
-    def list_files(self, remote_path: str = '.',
-                   complete: bool = False) -> List[str] | List[RemoteFile]:
+    def list_files(
+        self, remote_path: str = ".", complete: bool = False
+    ) -> List[str] | List[RemoteFile]:
         """Liste les fichiers présents dans un répertoire du serveur SFTP de Dilicom.
         Args:
             remote_path (str): Le chemin distant du répertoire à lister.
@@ -297,16 +355,30 @@ class Connector:
                         modified_time = datetime.fromtimestamp(int_modified_time)
                     else:
                         modified_time = None
-                    remotefiles.append(RemoteFile(filename=filename,
-                                                 filepath=filepath,
-                                                 size=size,
-                                                 modified_time=modified_time))
-                logger.info("Fichier listés, répertoire '%s', serveur '%s:%s', nb_fichiers = %d",
-                            remote_path, self.config.host, self.config.port, len(remotefiles))
-                logger.debug("Fichiers listés, répertoire '%s', serveur '%s:%s', " + \
-                             "nb_fichiers = %d, fichiers = %s",
-                             remote_path, self.config.host, self.config.port, len(remotefiles),
-                             [str(f) for f in remotefiles])
+                    remotefiles.append(
+                        RemoteFile(
+                            filename=filename,
+                            filepath=filepath,
+                            size=size,
+                            modified_time=modified_time,
+                        )
+                    )
+                logger.info(
+                    "Fichier listés, répertoire '%s', serveur '%s:%s', nb_fichiers = %d",
+                    remote_path,
+                    self.config.host,
+                    self.config.port,
+                    len(remotefiles),
+                )
+                logger.debug(
+                    "Fichiers listés, répertoire '%s', serveur '%s:%s', "
+                    + "nb_fichiers = %d, fichiers = %s",
+                    remote_path,
+                    self.config.host,
+                    self.config.port,
+                    len(remotefiles),
+                    [str(f) for f in remotefiles],
+                )
                 return remotefiles
             return self.sftp.listdir(remote_path)
         except FileNotFoundError as e:
@@ -314,22 +386,23 @@ class Connector:
             logger.error(message)
             raise DilicomSFTPError(message) from e
         except Exception as e:
-            message = f"Erreur lors du listage dans le répertoire '{remote_path}' " \
-                        + f"sur le serveur SFTP: {e}"
+            message = (
+                f"Erreur lors du listage dans le répertoire '{remote_path}' "
+                + f"sur le serveur SFTP: {e}"
+            )
             logger.error(message)
             raise DilicomSFTPError(message) from e
-
 
     def __enter__(self):
         """Permet d'utiliser le repository dans un contexte de gestion de ressources."""
         self.connect()
         return self
 
-
     def __exit__(
-            self, exc_type: Optional[type], # pylint: disable=unused-argument
-            exc_value: Optional[BaseException], # pylint: disable=unused-argument
-            traceback: Optional[TracebackType] # pylint: disable=unused-argument
-        ) -> None:
+        self,
+        exc_type: Optional[type],  # pylint: disable=unused-argument
+        exc_value: Optional[BaseException],  # pylint: disable=unused-argument
+        traceback: Optional[TracebackType],  # pylint: disable=unused-argument
+    ) -> None:
         """Ferme automatiquement la connexion lorsque le contexte est quitté."""
         self.close()

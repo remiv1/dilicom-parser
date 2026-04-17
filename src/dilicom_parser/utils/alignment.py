@@ -3,6 +3,7 @@
 from typing import Union, List, Any
 import pandas as pd
 
+
 def fix_alignment(row: Union[pd.Series, List[Any]], expected_len: int) -> List[Any]:
     """Ajuste l'alignement d'une ligne de données en fonction de la longueur attendue.
     Si la ligne a plus de valeurs que prévu, les valeurs excédentaires sont ignorées.

@@ -7,16 +7,17 @@ from ...models.service import (
     GencodCommentaireErreur,
 )
 
-def _parse_rubrique(    # pylint: disable=too-many-arguments
-        *,
-        code: str,
-        parts: List[str],
-        current: Dict[str, Any],
-        commentaires: List[Any],
-        type_message: str,
-        messages: List[GencodServiceMessage],
-        line: str
-        ) -> None:
+
+def _parse_rubrique(  # pylint: disable=too-many-arguments
+    *,
+    code: str,
+    parts: List[str],
+    current: Dict[str, Any],
+    commentaires: List[Any],
+    type_message: str,
+    messages: List[GencodServiceMessage],
+    line: str,
+) -> None:
     """
     Parse une ligne de rubrique et met à jour le dictionnaire courant.
     Les rubriques sont identifiées par leur code (100, 221, 176, 198, 177, 199).
@@ -39,7 +40,9 @@ def _parse_rubrique(    # pylint: disable=too-many-arguments
             current["type_message"] = parts[2] if len(parts) > 2 else ""
 
         case "177":
-            commentaires.append(_parse_commentaire_177(parts=parts, type_message=type_message))
+            commentaires.append(
+                _parse_commentaire_177(parts=parts, type_message=type_message)
+            )
 
         case "199":
             nombre_rubriques = parts[1] if len(parts) > 1 else None
@@ -55,12 +58,13 @@ def _parse_rubrique(    # pylint: disable=too-many-arguments
             )
             messages.append(msg)
         case _:
-            raise ValueError(f"Code de rubrique inattendu: {code} dans la ligne: {line}")
+            raise ValueError(
+                f"Code de rubrique inattendu: {code} dans la ligne: {line}"
+            )
+
 
 def _parse_commentaire_177(
-    *,
-    parts: List[str],
-    type_message: str
+    *, parts: List[str], type_message: str
 ) -> GencodCommentaireAleAte | GencodCommentaireErreur:
     """
     Parse une ligne CNUR 177 selon le type de message.
@@ -122,7 +126,7 @@ def parse_gencod_lines(lines: List[str]) -> List[GencodServiceMessage]:
         if not line:
             continue
 
-        parts = line.split(';')
+        parts = line.split(";")
         code = parts[0] if parts else ""
 
         # CNUT de début (05003)
@@ -140,7 +144,7 @@ def parse_gencod_lines(lines: List[str]) -> List[GencodServiceMessage]:
             commentaires=commentaires,
             type_message=type_message,
             messages=messages,
-            line=line
+            line=line,
         )
 
         # Synchroniser type_message depuis le dictionnaire courant

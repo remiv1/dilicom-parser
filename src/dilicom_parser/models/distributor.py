@@ -6,6 +6,7 @@ from typing import Optional, List, Tuple, Any
 from dataclasses import dataclass, fields
 import pandas as pd
 
+
 @dataclass
 class FileDistri:
     """
@@ -15,9 +16,11 @@ class FileDistri:
     - footer: Chaîne représentant le champ de pied de page du fichier.
     - data: DataFrame contenant les données du fichier, avec les champs organisés en colonnes.
     """
+
     header: List[str]
     footer: str
     data: pd.DataFrame
+
 
 @dataclass
 class DistributorDataBloc1:
@@ -60,6 +63,7 @@ class DistributorDataBloc1:
         - 0 = Non adhérent
         - 1 = Adhérent
     """
+
     ref: str
     mvt: str
     gln: str
@@ -114,6 +118,7 @@ class DistributorDataBloc2:
         - 01 = Pré-facturation/Stock théorique
         - 02 = Post-facturation/Fermeture du camion
     """
+
     integration_commande: str
     place_commande: str
     heure_limite: Optional[str]
@@ -146,6 +151,7 @@ class DistributorDataBloc3:
     - demat_facture_fiscale
     - centralisation_paiements
     """
+
     fiche_produit: Optional[int]
     propo_commandes: Optional[int]
     commande: Optional[int]
@@ -168,6 +174,7 @@ class DistributorLineData:
     Structure de données pour une ligne de fichier de type distributeur,
     regroupant les blocs 1, 2 et 3.
     """
+
     bloc1: DistributorDataBloc1
     bloc2: DistributorDataBloc2
     bloc3: DistributorDataBloc3
@@ -180,6 +187,7 @@ class DistributorData:
     Structure de données complète pour les fichiers de type distributeur,
     regroupant les blocs 1, 2 et 3.
     """
+
     debut_fichier: str
     ref_edi: str
     date_edi: int
@@ -205,8 +213,8 @@ def _row_to_dataclass_by_position(row: pd.Series[Any] | List[Any], cls: Any) -> 
 
 
 def _split_row_for_dataclasses(
-        row: pd.Series[Any] | List[Any]
-        ) -> Tuple[DistributorDataBloc1, DistributorDataBloc2, DistributorDataBloc3]:
+    row: pd.Series[Any] | List[Any],
+) -> Tuple[DistributorDataBloc1, DistributorDataBloc2, DistributorDataBloc3]:
     """
     Divise une ligne de données en segments correspondant à plusieurs dataclasses
     en utilisant la position des champs.
@@ -221,9 +229,9 @@ def _split_row_for_dataclasses(
     for cls in classes:
         n = len(fields(cls))
         if isinstance(row, pd.Series):
-            segment: pd.Series[Any] | List[Any] = row.iloc[pos:pos+n]
+            segment: pd.Series[Any] | List[Any] = row.iloc[pos : pos + n]
         else:
-            segment = row[pos:pos+n]
+            segment = row[pos : pos + n]
         result.append(_row_to_dataclass_by_position(segment, cls))
         pos += n
     return result[0], result[1], result[2]
@@ -254,7 +262,7 @@ def df_to_distributor_data(distri_file: FileDistri) -> DistributorData:
             bloc1=blocs[0],
             bloc2=blocs[1],
             bloc3=blocs[2],
-            fin_ligne=row.iloc[-1]  # dernière colonne
+            fin_ligne=row.iloc[-1],  # dernière colonne
         )
 
         lines.append(line)
@@ -268,5 +276,5 @@ def df_to_distributor_data(distri_file: FileDistri) -> DistributorData:
         ref_edi=ref_filed,
         date_edi=date_filed,
         lines=lines,
-        fin_fichier=footer
+        fin_fichier=footer,
     )

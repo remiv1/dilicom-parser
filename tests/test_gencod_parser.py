@@ -5,7 +5,10 @@ from pathlib import Path
 import pytest
 
 from src.dilicom_parser.parser.services.gencod import parse_gencod_lines
-from src.dilicom_parser.models.service import GencodCommentaireAleAte, GencodCommentaireErreur
+from src.dilicom_parser.models.service import (
+    GencodCommentaireAleAte,
+    GencodCommentaireErreur,
+)
 
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
@@ -38,7 +41,9 @@ def multiple_messages_lines() -> list[str]:
 class TestGencodParserBasics:
     """Tests basiques du parseur GENCOD."""
 
-    def test_parse_ate_message(self, ate_lines: list[str]) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ate_message(
+        self, ate_lines: list[str]  # pylint: disable=redefined-outer-name
+    ) -> None:
         """Valide le parsing d'un message ATE (Avis de traitement)."""
         messages = parse_gencod_lines(ate_lines)
 
@@ -71,7 +76,9 @@ class TestGencodParserBasics:
         assert comment.date_lecture is None
         assert comment.heure_lecture is None
 
-    def test_parse_ale_message(self, ale_lines: list[str]) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ale_message(
+        self, ale_lines: list[str]  # pylint: disable=redefined-outer-name
+    ) -> None:
         """Valide le parsing d'un message ALE (Avis de lecture)."""
         messages = parse_gencod_lines(ale_lines)
 
@@ -89,7 +96,9 @@ class TestGencodParserBasics:
         assert comment.date_lecture == "20151230"
         assert comment.heure_lecture == "1130"
 
-    def test_parse_ane_message_with_error(self, ane_lines: list[str]) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ane_message_with_error(
+        self, ane_lines: list[str]  # pylint: disable=redefined-outer-name
+    ) -> None:
         """Valide le parsing d'un message ANE avec erreur."""
         messages = parse_gencod_lines(ane_lines)
 
@@ -119,7 +128,7 @@ class TestGencodParserMultipleMessages:
     """Tests pour les fichiers GENCOD avec plusieurs messages."""
 
     def test_parse_multiple_messages(
-        self, multiple_messages_lines: list[str] # pylint: disable=redefined-outer-name
+        self, multiple_messages_lines: list[str]  # pylint: disable=redefined-outer-name
     ) -> None:
         """Valide le parsing d'un fichier GENCOD avec plusieurs messages."""
         messages = parse_gencod_lines(multiple_messages_lines)
@@ -142,14 +151,16 @@ class TestGencodParserMultipleMessages:
         assert comment1.reference_cnut == "REF004"
         assert comment2.reference_cnut == "REF005"
 
-        assert comment1.date_lecture is None    # type: ignore
+        assert comment1.date_lecture is None  # type: ignore
         assert comment2.date_lecture == "20151230"  # type: ignore
 
 
 class TestGencodParserDataIntegrity:
     """Tests pour l'intégrité des données parsées."""
 
-    def test_empty_fields_handled(self, ate_lines: list[str]) -> None: # pylint: disable=redefined-outer-name
+    def test_empty_fields_handled(
+        self, ate_lines: list[str]  # pylint: disable=redefined-outer-name
+    ) -> None:
         """Valide que les champs vides sont gérés correctement."""
         messages = parse_gencod_lines(ate_lines)
         msg = messages[0]
@@ -173,7 +184,7 @@ class TestGencodParserDataIntegrity:
 199;8
 """.strip().splitlines()
 
-        messages = parse_gencod_lines(lines)    # type: ignore
+        messages = parse_gencod_lines(lines)  # type: ignore
 
         assert len(messages) == 1
         msg = messages[0]
@@ -182,7 +193,9 @@ class TestGencodParserDataIntegrity:
         assert msg.commentaires[0].reference_cnut == "REF006A"
         assert msg.commentaires[1].reference_cnut == "REF006B"
 
-    def test_error_message_types(self, ane_lines: list[str]) -> None: # pylint: disable=redefined-outer-name
+    def test_error_message_types(
+        self, ane_lines: list[str]  # pylint: disable=redefined-outer-name
+    ) -> None:
         """Valide que les types d'erreur (ANE/AST) sont bien différenciés."""
         messages = parse_gencod_lines(ane_lines)
         msg = messages[0]

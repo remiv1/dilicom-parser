@@ -5,11 +5,10 @@ from os import getenv
 from pathlib import Path
 import logging
 import pandas as pd
-from ..models.distributor import (
-    df_to_distributor_data, DistributorData, FileDistri
-)
+from ..models.distributor import df_to_distributor_data, DistributorData, FileDistri
 
 logger = logging.getLogger(__name__)
+
 
 class DistributorParser:
     """
@@ -39,18 +38,14 @@ class DistributorParser:
     """
 
     def __init__(self) -> None:
-        self.directory: Path = Path(getenv('DILICOM_IN_DIR', './DILICOM_IN'))
+        self.directory: Path = Path(getenv("DILICOM_IN_DIR", "./DILICOM_IN"))
         self.data: Optional[pd.DataFrame] = None
         self.file_path: Optional[Path] = None
         self.filename: str = ""
         self.distributor_data: Optional[DistributorData] = None
         if not self.directory.exists():
-            logger.debug(
-                "Création du répertoire '%s'",
-                self.directory
-            )
+            logger.debug("Création du répertoire '%s'", self.directory)
             self.directory.mkdir(parents=True, exist_ok=True)
-
 
     def __define_file_type(self, header: List[str]) -> str:
         """
@@ -78,14 +73,17 @@ class DistributorParser:
             raise ValueError(message)
         match header[1]:
             case t if any(t.startswith(k) for k in headers_and_types):
-                logger.debug("En-tête reconnu: %s, type de fichier: %s",
-                             header[1], headers_and_types[t])
+                logger.debug(
+                    "En-tête reconnu: %s, type de fichier: %s",
+                    header[1],
+                    headers_and_types[t],
+                )
                 return next(v for k, v in headers_and_types.items() if t.startswith(k))
             case _:
-                logger.warning("En-tête non reconnu: %s. Type de fichier inconnu.",
-                               header[1])
-                return 'unknown'
-
+                logger.warning(
+                    "En-tête non reconnu: %s. Type de fichier inconnu.", header[1]
+                )
+                return "unknown"
 
     def __parse_distrib(self, file_distri: FileDistri) -> None:
         """
@@ -100,8 +98,9 @@ class DistributorParser:
         if self.data is not None:
             self.distributor_data = df_to_distributor_data(file_distri)
         else:
-            logger.warning("Aucune donnée à parser. Veuillez d'abord parser le fichier.")
-
+            logger.warning(
+                "Aucune donnée à parser. Veuillez d'abord parser le fichier."
+            )
 
     def __get_header_footer_and_data(self) -> FileDistri:
         """
@@ -113,16 +112,19 @@ class DistributorParser:
             FileDistri: Un objet contenant l'en-tête, le pied de page et les données du fichier.
         """
         _file_to_read = Path(self.directory / self.filename)
-        with _file_to_read.open('r', encoding='cp1252', newline='') as f:
+        with _file_to_read.open("r", encoding="cp1252", newline="") as f:
             lines = f.readlines()
-            header = lines[0].strip().split(';')
+            header = lines[0].strip().split(";")
             footer = lines[-1].strip()
-            data = [line.strip().split(';') for line in lines[1:-1]]
+            data = [line.strip().split(";") for line in lines[1:-1]]
             df = pd.DataFrame(data)
-        logger.debug("Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
-                     self.filename, header, len(data))
+        logger.debug(
+            "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
+            self.filename,
+            header,
+            len(data),
+        )
         return FileDistri(header, footer, df)
-
 
     def parse_file(self, filename: str) -> None:
         """
@@ -134,7 +136,7 @@ class DistributorParser:
             None
         """
         parsers = {
-            'supplier': self.__parse_distrib,
+            "supplier": self.__parse_distrib,
         }
         self.filename = filename
         self.file_path = self.directory / filename
@@ -145,5 +147,7 @@ class DistributorParser:
             self.data = distri_file.data
             parsers[file_type](distri_file)
         else:
-            logger.warning("Type de fichier inconnu pour l'en-tête: %s. Aucun parsing effectué.",
-                           distri_file.header[1])
+            logger.warning(
+                "Type de fichier inconnu pour l'en-tête: %s. Aucun parsing effectué.",
+                distri_file.header[1],
+            )

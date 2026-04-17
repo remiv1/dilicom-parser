@@ -12,6 +12,7 @@ from enum import Enum
 
 class ServiceMessageType(Enum):
     """Type de message de service Dilicom."""
+
     ATE = "912"  # Avis de traitement
     ALE = "912"  # Avis de lecture (même code, différencié par la présence de date de lecture)
     ANE = "913"  # Avis de non-émission
@@ -20,6 +21,7 @@ class ServiceMessageType(Enum):
 
 class OrigineMessageType(Enum):
     """Type du message d'origine."""
+
     COMMANDE = "023"
     AVIS_EXPEDITION = "024"
     JOURNAL_MOUVEMENTS = "152"
@@ -27,9 +29,11 @@ class OrigineMessageType(Enum):
 
 # ==================== GENCOD ====================
 
+
 @dataclass
 class GencodCommentaireAleAte:  # pylint: disable=too-many-instance-attributes
     """Commentaires (CNUR 177) pour ATE/ALE - identifiant 904."""
+
     gln_emetteur_origine: str
     cnut_message_origine: str
     reference_cnut: str
@@ -45,6 +49,7 @@ class GencodCommentaireAleAte:  # pylint: disable=too-many-instance-attributes
 @dataclass
 class GencodCommentaireErreur:  # pylint: disable=too-many-instance-attributes
     """Commentaires (CNUR 177) pour ANE (905) / AST (906)."""
+
     gln_emetteur_origine: str
     cnut_message_origine: str
     reference_cnut: str
@@ -65,6 +70,7 @@ GencodCommentaire: TypeAlias = Union[GencodCommentaireAleAte, GencodCommentaireE
 @dataclass
 class GencodServiceMessage:
     """Message de service au format GENCOD (CNUT 05003)."""
+
     cnut: str
     gln_destinataire: str
     gln_emetteur: str
@@ -97,10 +103,12 @@ class GencodServiceMessage:
 
 # ==================== EANCOM ====================
 
+
 @dataclass
 class EancomNAD:
     """Partie identifiée (NAD segment)."""
-    fonction: str       # SU, BY, DP
+
+    fonction: str  # SU, BY, DP
     gln: str
     code_identifiant: str = "9"
 
@@ -108,6 +116,7 @@ class EancomNAD:
 @dataclass
 class EancomErreur:
     """Segments ERC + FTX pour les erreurs."""
+
     code_erreur: str
     code_identification: str = "ZZZ"
     libelle_erreur: Optional[str] = None
@@ -116,6 +125,7 @@ class EancomErreur:
 @dataclass
 class EancomServiceMessage:
     """Message de service au format EANCOM D96A (APERAK)."""
+
     # UNB
     syntaxe_id: str
     syntaxe_version: str
@@ -126,10 +136,10 @@ class EancomServiceMessage:
     reference_interchange: str
     # UNH
     reference_message: str
-    type_message: str       # APERAK
-    version: str            # D
-    revision: str           # 96A
-    agence: str             # UN
+    type_message: str  # APERAK
+    version: str  # D
+    revision: str  # 96A
+    agence: str  # UN
     version_gs1: str
     # BGM
     identification_document: str
@@ -171,6 +181,7 @@ class EancomServiceMessage:
 @dataclass
 class EancomInterchange:
     """Un interchange EANCOM complet (UNB...UNZ) contenant N messages."""
+
     # UNB header
     syntaxe_id: str
     syntaxe_version: str

@@ -75,6 +75,7 @@ def _parse_unb(line: str) -> EancomInterchange:
 
 # ==================== Contexte de parsing ====================
 
+
 @dataclass
 class _MessageContext:
     """État mutable accumulé lors du parsing d'un message EANCOM (UNH…UNT).
@@ -104,6 +105,7 @@ class _MessageContext:
         nombre_segments         : Nombre de segments du message, tel que déclaré
                                   dans UNT.
     """
+
     identification_document: str = ""
     type_acquittement: str = ""
     date_creation: str = ""
@@ -119,6 +121,7 @@ class _MessageContext:
 
 
 # ==================== Handlers de segments ====================
+
 
 def _handle_bgm(segment: str, ctx: _MessageContext) -> None:
     """Traite le segment BGM (Beginning of Message — début de message).
@@ -182,11 +185,13 @@ def _handle_nad(segment: str, ctx: _MessageContext) -> None:
     parts = segment.split("+")
     fonction = parts[1] if len(parts) > 1 else ""
     gln_sub = parts[2].split(":") if len(parts) > 2 else ["", "", ""]
-    ctx.parties.append(EancomNAD(
-        fonction=fonction,
-        gln=gln_sub[0],
-        code_identifiant=gln_sub[2] if len(gln_sub) > 2 else "9",
-    ))
+    ctx.parties.append(
+        EancomNAD(
+            fonction=fonction,
+            gln=gln_sub[0],
+            code_identifiant=gln_sub[2] if len(gln_sub) > 2 else "9",
+        )
+    )
 
 
 def _handle_erc(segment: str, ctx: _MessageContext) -> None:
@@ -229,6 +234,7 @@ _SEGMENT_HANDLERS: dict[str, Callable[[str, _MessageContext], None]] = {
 
 
 # ==================== Parsing principal ====================
+
 
 def _parse_message(
     lines: List[str], idx: int, interchange: EancomInterchange

@@ -11,20 +11,25 @@ import paramiko
 
 logger = logging.getLogger(__name__)
 
+
 def retry_sftp(func: Callable[..., Any]) -> Callable[..., Any]:
     """
     Décorateur pour réessayer une opération SFTP en cas d'erreur de connexion.
-    
+
     args:
         func (callable): La fonction SFTP à décorer.
     returns:
         callable: La fonction décorée avec la logique de réessai.
     """
+
     def wrapper(self: Any, *args: Any, **kwargs: Any) -> Any:
         try:
             return func(self, *args, **kwargs)
         except (paramiko.SSHException, EOFError):
-            logger.warning("Erreur de connexion SFTP détectée, tentative de reconnexion...")
+            logger.warning(
+                "Erreur de connexion SFTP détectée, tentative de reconnexion..."
+            )
             self.connect()
             return func(self, *args, **kwargs)
+
     return wrapper

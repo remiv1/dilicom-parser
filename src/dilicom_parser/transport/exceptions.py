@@ -10,6 +10,7 @@ class DilicomConnectionError(Exception):
     """
     Exception levée en cas d'erreur de connexion au serveur SFTP de Dilicom.
     """
+
     def stdr_message(self) -> LiteralString:
         """
         Message d'erreur standard pour les problèmes de connexion au serveur SFTP de Dilicom.
@@ -21,6 +22,7 @@ class DilicomAuthenticationError(Exception):
     """
     Exception levée en cas d'erreur d'authentification au serveur SFTP de Dilicom.
     """
+
     def stdr_message(self) -> LiteralString:
         """
         Message d'erreur standard pour les problèmes d'authentification au serveur SFTP de Dilicom.
@@ -32,6 +34,7 @@ class DilicomSFTPError(Exception):
     """
     Exception levée en cas d'erreur lors des opérations SFTP avec le serveur de Dilicom.
     """
+
     def stdr_message(self) -> LiteralString:
         """
         Message d'erreur standard pour les problèmes lors des opérations SFTP avec le serveur.

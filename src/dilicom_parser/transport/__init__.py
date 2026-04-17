@@ -11,9 +11,9 @@ Ce module inclut:
     avec une reconnexion automatique.
 """
 
-from .connector import Connector    # pylint: disable=unused-import # type: ignore
-from .exceptions import (    # pylint: disable=unused-import # type: ignore
-    DilicomConnectionError,    # pylint: disable=unused-import # type: ignore
-    DilicomAuthenticationError,    # pylint: disable=unused-import # type: ignore
-    DilicomSFTPError,    # pylint: disable=unused-import # type: ignore
+from .connector import Connector  # pylint: disable=unused-import # type: ignore
+from .exceptions import (  # pylint: disable=unused-import # type: ignore
+    DilicomConnectionError,  # pylint: disable=unused-import # type: ignore
+    DilicomAuthenticationError,  # pylint: disable=unused-import # type: ignore
+    DilicomSFTPError,  # pylint: disable=unused-import # type: ignore
 )

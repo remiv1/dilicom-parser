@@ -1,4 +1,11 @@
-# dilicom-parser
+# Package de gestion des fichiers Dilicom sur serveur SFTP
+
+![PyPi version](https://img.shields.io/pypi/v/dilicom-parser)
+![Licence](https://img.shields.io/badge/license-MIT-blue)
+![Python version](https://img.shields.io/pypi/pyversions/dilicom-parser)
+![Pandas version](https://img.shields.io/badge/pandas-%3E%3D3.0.2-green)
+![Paramiko version](https://img.shields.io/badge/paramiko-%3E%3D4.0.0-green)
+![python-dotenv version](https://img.shields.io/badge/python--dotenv-%3E%3D1.2.2-green)
 
 **dilicom-parser** est une bibliothèque Python souveraine dédiée à la lecture, au parsing, à la validation et à la transformation des fichiers Dilicom (distributeurs, commandes, etc.).
 Elle fournit des modèles de données stricts, des parseurs robustes et des outils d’audit pour garantir une intégration fiable et reproductible.
@@ -24,8 +31,12 @@ Créer le fichier .env avec les variables d’environnement nécessaires :
 
 ```ini
 #.env
+
+# Variables pour les dossier d’entrée et de sortie des fichiers
 DILICOM_IN_DIR=/path/to/dilicom/files
 DILICOM_OUT_DIR=/path/to/output
+
+# Optionnel, variables pour la connexion FTP si nécessaire
 DILICOM_HOST=ftp.example.com
 DILICOM_PORT=11234
 DILICOM_USER=username
@@ -38,10 +49,12 @@ Ensuite, utiliser le parser dans votre code Python :
 from dotenv import load_dotenv
 from dilicom_parser import DistributorParser
 
-load_dotenv('.path/to/.env')
+load_dotenv('path/to/.env')
 
 parser = DistributorParser()
 data = parser.parse_file("distributeur.txt")
 
 for line in data.lines:
-    print(line.bloc1.rs1, line.bloc1.ville)
+    print(line.bloc1.rs1)   # Raison sociale principale du distributeur
+    print(line.bloc1.ville)  # Ville du distributeur
+```

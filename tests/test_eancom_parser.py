@@ -45,7 +45,9 @@ def multiple_messages_content() -> str:
 class TestEancomParserBasics:
     """Tests basiques du parseur EANCOM."""
 
-    def test_parse_ate_message(self, ate_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ate_message(
+        self, ate_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide le parsing d'un message ATE (Avis de traitement)."""
         interchange = parse_eancom(ate_content)
 
@@ -66,7 +68,9 @@ class TestEancomParserBasics:
         assert msg.reference_acquittee == "2015456450123"
         assert len(msg.parties) == 3
 
-    def test_parse_ale_message(self, ale_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ale_message(
+        self, ale_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide le parsing d'un message ALE (Avis de lecture)."""
         interchange = parse_eancom(ale_content)
 
@@ -81,7 +85,9 @@ class TestEancomParserBasics:
         assert msg.date_traitement == "20151230"
         assert msg.format_date_traitement == "102"
 
-    def test_parse_ane_message_with_error(self, ane_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_ane_message_with_error(
+        self, ane_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide le parsing d'un message ANE avec erreur."""
         interchange = parse_eancom(ane_content)
 
@@ -102,7 +108,7 @@ class TestEancomParserWarnings:
     """Tests pour la gestion des warnings du parseur."""
 
     def test_invalid_qualifier_raises_warning(
-        self, invalid_qualifier_content: str # pylint: disable=redefined-outer-name
+        self, invalid_qualifier_content: str  # pylint: disable=redefined-outer-name
     ) -> None:
         """Valide qu'un qualificatif DTM invalide lève un SegmentInconnuWarning."""
         with pytest.warns(SegmentInconnuWarning, match="Qualificatif DTM inattendu"):
@@ -118,7 +124,7 @@ class TestEancomParserWarnings:
         assert msg.date_lecture is None
 
     def test_warning_can_be_filtered_as_error(
-        self, invalid_qualifier_content: str # pylint: disable=redefined-outer-name
+        self, invalid_qualifier_content: str  # pylint: disable=redefined-outer-name
     ) -> None:
         """Valide qu'on peut configurer le warning comme erreur."""
         with pytest.raises(SegmentInconnuWarning):
@@ -132,7 +138,9 @@ class TestEancomParserWarnings:
 class TestEancomParserMultipleMessages:
     """Tests pour les interchanges avec plusieurs messages."""
 
-    def test_parse_multiple_messages(self, multiple_messages_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_multiple_messages(
+        self, multiple_messages_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide le parsing d'un interchange avec plusieurs messages."""
         interchange = parse_eancom(multiple_messages_content)
 
@@ -154,7 +162,9 @@ class TestEancomParserMultipleMessages:
 class TestEancomParserParties:
     """Tests pour la gestion des parties identifiées (NAD)."""
 
-    def test_parse_parties_with_roles(self, ate_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_parse_parties_with_roles(
+        self, ate_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide que les parties sont correctement parsées avec leurs rôles."""
         interchange = parse_eancom(ate_content)
         msg = interchange.messages[0]
@@ -180,7 +190,9 @@ class TestEancomParserParties:
 class TestEancomParserEdgeCases:
     """Tests pour les cas limites et comportements particuliers."""
 
-    def test_partial_message_fields(self, ate_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_partial_message_fields(
+        self, ate_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide que les champs optionnels non présents sont None ou vides."""
         interchange = parse_eancom(ate_content)
         msg = interchange.messages[0]
@@ -190,7 +202,9 @@ class TestEancomParserEdgeCases:
         assert msg.date_lecture is None
         assert msg.erreur is None
 
-    def test_empty_parts_handled_gracefully(self, ate_content: str) -> None: # pylint: disable=redefined-outer-name
+    def test_empty_parts_handled_gracefully(
+        self, ate_content: str
+    ) -> None:  # pylint: disable=redefined-outer-name
         """Valide que les segments partiels ne causent pas d'erreur."""
         # Les segments avec moins que le nombre de parties attendues
         # doivent être gérés sans crash
