@@ -1,11 +1,11 @@
 [project]
 name = "dilicom-parser"
-version = "0.2.0"
+version = "0.2.1"
 description = "Bibliothèque souveraine pour parser les fichiers Dilicom déposés sur le serveur SFTP de Dilicom avec connecteur SFTP intégré."
 authors = [{name="Rémi Verschuur", email="rverschuur@audit-io.fr"}]
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.10, <=3.14"
 dependencies = ["pandas", "paramiko", "python-dotenv"]
 keywords = ["dilicom", "livres", "édition", "ONIX", "SFTP", "EDI", "distribution"]
 classifiers = [
@@ -17,6 +17,8 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Office/Business",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Natural Language :: French",

@@ -35,3 +35,15 @@
 ### Added 2026-4-16 (3)
 
 - Added functionality to connect to the Dilicom SFTP server and retrieve data.
+
+## [0.2.1] - 2026-4-17
+
+### Added 2026-4-17 (1)
+
+- Added functionality to download all items of a specific folder from the Dilicom SFTP server.
+
+### Fixed 2026-4-17 (1)
+
+- Problem during distributors file parsing fixed.
+- Problem to add a specific env file during Connector initialization fixed.
+- Using the folder of the .env file to download the files from the SFTP server fixed.
