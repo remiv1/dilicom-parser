@@ -64,7 +64,7 @@
 <p>Module de parsing des fichiers distributeurs Dilicom.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.distributor_parser.</span></span><span class="sig-name descname"><span class="pre">DistributorParser</span></span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser" title="Lien vers cette définition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.distributor_parser.</span></span><span class="sig-name descname"><span class="pre">DistributorParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distributor_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Classe de service pour le parsing des fichiers reçus de Dilicom.
 Cette classe est responsable de :</p>
@@ -86,40 +86,30 @@ Cette classe est responsable de :</p>
 </ul>
 </dd>
 <dt>Méthodes :</dt><dd><ul class="simple">
-<li><p>__init__() : Initialise les attributs de la classe et crée le répertoire s’il n’existe pas.</p></li>
-<li><p>__define_file_type(header: List[str]) -&gt; str : Détermine le type en fonction de son en-tête.</p></li>
+<li><p>__init__() : Initialise les attributs de la classe et crée le répertoire s’il n’existe pas</p></li>
 <li><dl class="simple">
-<dt>__parse_distrib(file_distri: FileDistri) -&gt; None<span class="classifier">Parse les fichiers de type “supplier”</span></dt><dd><p>et extrait les données.</p>
+<dt>parse()<span class="classifier">Parse les fichiers de type “supplier” et extrait les données</span></dt><dd><p>(combine _transform_data_to_dataframe() et _df_to_distributor_data()).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>__get_header_footer_and_data() -&gt; FileDistri<span class="classifier">Lit le fichier et retourne l’en-tête,</span></dt><dd><p>le pied de page et les données.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>parse_file(filename: str) -&gt; None<span class="classifier">Parse le fichier en fonction de son type et extrait</span></dt><dd><p>les données.</p>
-</dd>
-</dl>
-</li>
+<li><p>_transform_data_to_dataframe() : transforme la donnée texte en un DataFrame pandas.</p></li>
+<li><p>_df_to_distributor_data() : Convertit un DataFrame en une instance de DistributorData.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser.parse_file">
-<span class="sig-name descname"><span class="pre">parse_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser.parse_file" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Parse le fichier en fonction de son type et extrait les données.</p>
+<dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser.parse" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Parse les fichiers de type “supplier” et extrait les données.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – Le nom du fichier à parser ou un objet Path.</p>
+<dd class="field-odd"><p><strong>None</strong></p>
 </dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Les données extraites du fichier,
-ou None si le parsing échoue.</p>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
 </dd>
-<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.distributor.DistributorData" title="dilicom_parser.models.distributor.DistributorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributorData</span></code></a> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>

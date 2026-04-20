@@ -48,6 +48,7 @@ Ensuite, utiliser le parser dans votre code Python :
 ```python
 from dotenv import load_dotenv
 from dilicom_parser import DistributorParser
+from dilicom_parser.classifier
 
 load_dotenv('path/to/.env')
 

@@ -6,7 +6,13 @@ entités et structures de données rencontrées lors du parsing des fichiers Dil
 tels que les messages de service, les données de distributeurs, etc.
 """
 
-from .connector import RemoteFile  # pylint: disable=unused-import # type: ignore
+from .connector import (
+    RemoteFile,  # pylint: disable=unused-import # type: ignore
+)
+from .classifier import (
+    FileHeader,  # pylint: disable=unused-import # type: ignore
+    FileContent,  # pylint: disable=unused-import # type: ignore
+)
 from .service import (
     GencodServiceMessage,  # pylint: disable=unused-import # type: ignore
     EancomInterchange,  # pylint: disable=unused-import # type: ignore

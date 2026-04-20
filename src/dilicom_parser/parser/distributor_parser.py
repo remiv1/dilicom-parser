@@ -1,16 +1,22 @@
 """Module de parsing des fichiers distributeurs Dilicom."""
 
-from typing import Optional, List
-from os import getenv
-from pathlib import Path
+from typing import Optional, Any
+from dataclasses import fields
 import logging
 import pandas as pd
-from ..models.distributor import df_to_distributor_data, DistributorData, FileDistri
+from ..models.distributor import (
+    DistributorData,
+    DistributorLineData,
+    DistributorDataBloc1,
+    DistributorDataBloc2,
+    DistributorDataBloc3,
+)
+from ..models.classifier import FileContent
 
 logger = logging.getLogger(__name__)
 
 
-class DistributorParser:
+class DistributorParser:    # pylint: disable=too-few-public-methods
     """
     Classe de service pour le parsing des fichiers reçus de Dilicom.
     Cette classe est responsable de :
@@ -27,83 +33,44 @@ class DistributorParser:
      - distributor_data : Optional[DistributorData] - Les données du distributeur extraites.
 
     Méthodes :
-     - __init__() : Initialise les attributs de la classe et crée le répertoire s'il n'existe pas.
-     - __define_file_type(header: List[str]) -> str : Détermine le type en fonction de son en-tête.
-     - __parse_distrib(file_distri: FileDistri) -> None : Parse les fichiers de type 'supplier'
-                                                          et extrait les données.
-     - __get_header_footer_and_data() -> FileDistri : Lit le fichier et retourne l'en-tête,
-                                                      le pied de page et les données.
-     - parse_file(filename: str) -> None : Parse le fichier en fonction de son type et extrait
-                                           les données.
+        - __init__() : Initialise les attributs de la classe et crée le répertoire s'il n'existe pas
+        - parse() : Parse les fichiers de type 'supplier' et extrait les données
+                    (combine _transform_data_to_dataframe() et _df_to_distributor_data()).
+        - _transform_data_to_dataframe() : transforme la donnée texte en un DataFrame pandas.
+        - _df_to_distributor_data() : Convertit un DataFrame en une instance de DistributorData.
     """
 
-    def __init__(self) -> None:
-        self.directory: Path = Path(getenv("DILICOM_IN_DIR", "./DILICOM_IN"))
-        self.data: Optional[pd.DataFrame] = None
-        self.file_path: Optional[Path] = None
-        self.filename: str = ""
-        self.distributor_data: Optional[DistributorData] = None
-        if not self.directory.exists():
-            logger.debug("Création du répertoire '%s'", self.directory)
-            self.directory.mkdir(parents=True, exist_ok=True)
+    def __init__(self, distributor_list: list[FileContent]) -> None:
+        self.files_data: list[FileContent] = distributor_list
+        self.distributor_data: list[DistributorData] = []
+        if any(f.file_type != "supplier" for f in distributor_list):
+            logger.warning(
+                "Certains fichiers ne sont pas de type 'supplier'." \
+                " Veuillez vérifier les en-têtes des fichiers."
+            )
+            raise ValueError("Tous les fichiers doivent être de type 'supplier' pour le parsing.")
 
-    def __define_file_type(self, header: List[str]) -> str:
-        """
-        Détermine le type de fichier en fonction de son en-tête.
-         - Si l'en-tête correspond à "Distrib_DLC", le type de fichier est "supplier".
-         - Autre en-têtes à implémenter selon les besoins futurs.
-         - Si l'en-tête ne correspond à aucun type connu, le type de fichier est "unknown".
-        Args:
-            header (List[str]): L'en-tête du fichier à analyser.
-        Returns:
-            str: Le type de fichier déterminé ("supplier", "unknown", etc.).
-        Raises:
-            ValueError: Si la taille ou le format de l'en-tête est inattendu ou incorrect.
-        """
-        headers_and_types = {
-            "Distrib_DLC": "supplier",
-        }
-        if len(header) != 3:
-            message = f"Taille du header inattendue: {len(header)}, attendu : 3"
-            logger.error(message)
-            raise ValueError(message)
-        if header[0] != "L000000":
-            message = f"Format d'en-tête inattendu: {header[0]}"
-            logger.error(message)
-            raise ValueError(message)
-        match header[1]:
-            case t if any(k in t for k in headers_and_types):
-                file_type = next(v for k, v in headers_and_types.items() if k in t)
-                logger.debug(
-                    "En-tête reconnu: %s, type de fichier: %s",
-                    header[1],
-                    file_type,
-                )
-                return file_type
-            case _:
-                logger.warning(
-                    "En-tête non reconnu: %s. Type de fichier inconnu.", header[1]
-                )
-                return "unknown"
-
-    def __parse_distrib(self, file_distri: FileDistri) -> None:
+    def parse(self) -> None:
         """
         Parse les fichiers de type 'supplier' et extrait les données.
 
         Args:
-            file_distri (FileDistri): L'objet contenant l'en-tête, le pied de page
-                                      et les données du fichier.
+            None
         Returns:
             None
         """
-        if self.data is not None:
-            self.distributor_data = df_to_distributor_data(file_distri)
-        else:
-            logger.warning(
-                "Aucune donnée à parser. Veuillez d'abord parser le fichier."
-            )
+        self.distributor_data = []  # Réinitialiser les données du distributeur avant de parser
+        for f in self.files_data:
+            self._transform_data_to_dataframe()
+            parsed_data = self._df_to_distributor_data(f)
+            if parsed_data is not None:
+                self.distributor_data.append(parsed_data)
+            else:
+                logger.warning(
+                    "Aucune donnée à parser. Veuillez d'abord parser le fichier."
+                )
 
-    def __get_header_footer_and_data(self) -> FileDistri:
+    def _transform_data_to_dataframe(self) -> "DistributorParser":
         """
         Lit le fichier et retourne l'en-tête et les données.
 
@@ -112,53 +79,102 @@ class DistributorParser:
         Returns:
             FileDistri: Un objet contenant l'en-tête, le pied de page et les données du fichier.
         """
-        _file_to_read = self.file_path
-        if _file_to_read is None:
-            message = "Aucun fichier spécifié pour la lecture."
-            logger.error(message)
-            raise ValueError(message)
-        with _file_to_read.open("r", encoding="cp1252", newline="") as f:
-            lines = f.readlines()
-            header = lines[0].strip().split(";")
-            footer = lines[-1].strip()
-            data = [line.strip().split(";") for line in lines[1:-1]]
-            df = pd.DataFrame(data)
-        logger.debug(
-            "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
-            self.filename,
-            header,
-            len(data),
-        )
-        return FileDistri(header, footer, df)
+        for f in self.files_data:
+            f.df = pd.DataFrame(f.data)
+            logger.debug(
+                "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
+                f.header.ref_file if f.header else "N/A",
+                f.header,
+                len(f.data),
+            )
+        return self
 
-    def parse_file(self, filename: str | Path) -> Optional[DistributorData]:
+
+    def __row_to_dataclass_by_position(self, row: pd.Series[Any] | list[Any], cls: Any) -> Any:
         """
-        Parse le fichier en fonction de son type et extrait les données.
+        Convertit une ligne de données en une instance d'une dataclass en utilisant
+        la position des champs.
 
         Args:
-            filename (str | Path): Le nom du fichier à parser ou un objet Path.
+            row: La ligne de données à convertir (pandas Series ou liste).
+            cls: La classe de dataclass dans laquelle convertir la ligne.
         Returns:
-            Optional[DistributorData]: Les données extraites du fichier,
-            ou None si le parsing échoue.
+            Une instance de la dataclass cls avec les valeurs de la ligne.
         """
-        parsers = {
-            "supplier": self.__parse_distrib,
-        }
-        if isinstance(filename, str):
-            self.filename = filename
-            self.file_path = self.directory / filename
-        else:
-            self.file_path = filename
-            self.filename = filename.name
-        distri_file = self.__get_header_footer_and_data()
-        file_type = self.__define_file_type(distri_file.header)
-        logger.debug("Type de fichier déterminé: %s", file_type)
-        if file_type in parsers:
-            self.data = distri_file.data
-            parsers[file_type](distri_file)
-        else:
-            logger.warning(
-                "Type de fichier inconnu pour l'en-tête: %s. Aucun parsing effectué.",
-                distri_file.header[1],
+        values = list(row)  # valeurs dans l'ordre du DataFrame
+        attrs = [f.name for f in fields(cls)]  # attributs dans l'ordre de la dataclass
+        kwargs = dict(zip(attrs, values))
+        return cls(**kwargs)
+
+
+    def __split_row_for_dataclasses(
+        self, row: pd.Series[Any] | list[Any],
+    ) -> tuple[DistributorDataBloc1, DistributorDataBloc2, DistributorDataBloc3]:
+        """
+        Divise une ligne de données en segments correspondant à plusieurs dataclasses
+        en utilisant la position des champs.
+        Args:
+            row: La ligne de données à diviser (pandas Series ou liste).
+        Returns:
+            Un tuple d'instances de dataclass correspondant aux segments de la ligne.
+        """
+        classes = DistributorDataBloc1, DistributorDataBloc2, DistributorDataBloc3
+        pos = 0
+        result: list[Any] = []
+        for cls in classes:
+            n = len(fields(cls))
+            if isinstance(row, pd.Series):
+                segment: pd.Series[Any] | list[Any] = row.iloc[pos : pos + n]
+            else:
+                segment = row[pos : pos + n]
+            result.append(self.__row_to_dataclass_by_position(segment, cls))
+            pos += n
+        return result[0], result[1], result[2]
+
+
+    def _df_to_distributor_data(self, data: FileContent) -> Optional[DistributorData]:
+        """
+        Convertit les data en une instance de DistributorData en utilisant la position des champs.
+
+        Args:
+            data: Le FileContent à convertir.
+        Returns:
+            Une instance de DistributorData avec les données du FileContent,
+            ou None si le DataFrame est vide.
+        """
+        lines: list[DistributorLineData] = []
+        if data.df is None:
+            message = "Le DataFrame est vide. Impossible de convertir en DistributorData."
+            logger.warning(message)
+            return None
+        header, footer, df = data.header, data.footer, data.df
+
+        for _, row in df.iterrows():
+            blocs = self.__split_row_for_dataclasses(row)
+
+            if len(blocs) != 3:
+                message = f"""
+                3 blocs attendus pour chaque ligne, mais {len(blocs)} ont été trouvés.
+                Vérifiez la structure du DataFrame et les dataclasses.
+                """
+                raise ValueError(message)
+            line = DistributorLineData(
+                bloc1=blocs[0],
+                bloc2=blocs[1],
+                bloc3=blocs[2],
+                fin_ligne=row.iloc[-1],  # dernière colonne
             )
-        return self.distributor_data
+
+            lines.append(line)
+
+        head_filed = header.ref_file if header else ""
+        ref_filed = header.ref_file if header else ""
+        date_filed = int(header.date_file) if header and header.date_file.isdigit() else 0
+
+        return DistributorData(
+            debut_fichier=head_filed,
+            ref_edi=ref_filed,
+            date_edi=date_filed,
+            lines=lines,
+            fin_fichier=footer,
+        )

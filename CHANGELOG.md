@@ -59,3 +59,9 @@
 ### Fixed 2026-4-17 (3)
 
 - Problem with parsing distributors files if complete path is given fixed.
+
+## [0.2.4] - 2026-4-20
+
+### Added 2026-4-20 (1)
+
+- Change logic for verifying file type using a clasifier instead of using a method in the parser. This allows to separate the concerns and to have a more flexible architecture for future extensions. The classifier is now responsible for determining the type of each file, using a dictionary with keys = strings to search in the header of the file and values = the corresponding class object to use for parsing. The parser can now parse many files of same type in a single call and the classifier can easily give to each parser the correct list of files to parse in a single call.
