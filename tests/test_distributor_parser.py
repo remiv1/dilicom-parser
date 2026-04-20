@@ -41,7 +41,7 @@ def _make_data_row(
 
 
 def _make_file_content(
-    file_type: str = "supplier",
+    file_type: str = "distributor",
     data: list[list[str]] | None = None,
     ref_file: str = "L000000",
     type_file: str = "Distrib_DLC_11042026",
@@ -61,24 +61,24 @@ def _make_file_content(
 class TestDistributorParserInit:
     """Tests du constructeur du DistributorParser."""
 
-    def test_init_with_supplier_files(self) -> None:
-        """L'initialisation accepte des fichiers de type 'supplier'."""
+    def test_init_with_distributor_files(self) -> None:
+        """L'initialisation accepte des fichiers de type 'distributor'."""
         fc = _make_file_content()
         parser = DistributorParser([fc])
 
         assert len(parser.files_data) == 1
         assert not parser.distributor_data
 
-    def test_init_rejects_non_supplier(self) -> None:
-        """L'initialisation lève ValueError si un fichier n'est pas 'supplier'."""
+    def test_init_rejects_non_distributor(self) -> None:
+        """L'initialisation lève ValueError si un fichier n'est pas 'distributor'."""
         fc = _make_file_content(file_type="unknown")
 
-        with pytest.raises(ValueError, match="type 'supplier'"):
+        with pytest.raises(ValueError, match="type 'distributor'"):
             DistributorParser([fc])
 
     def test_init_rejects_mixed_types(self) -> None:
         """L'initialisation lève ValueError si les types sont mélangés."""
-        fc_ok = _make_file_content(file_type="supplier")
+        fc_ok = _make_file_content(file_type="distributor")
         fc_bad = _make_file_content(file_type="unknown")
 
         with pytest.raises(ValueError):
@@ -252,7 +252,7 @@ class TestDistributorParserEdgeCases:
         )
         footer = lines[-1].strip()
         data = [line.strip().split(";") for line in lines[1:-1]]
-        fc = FileContent(header=header, data=data, footer=footer, file_type="supplier")
+        fc = FileContent(header=header, data=data, footer=footer, file_type="distributor")
 
         parser = DistributorParser([fc])
         parser.parse()
@@ -282,7 +282,7 @@ class TestDistributorParserEdgeCases:
         )
         footer = lines[-1].strip()
         data = [line.strip().split(";") for line in lines[1:-1]]
-        fc = FileContent(header=header, data=data, footer=footer, file_type="supplier")
+        fc = FileContent(header=header, data=data, footer=footer, file_type="distributor")
 
         parser = DistributorParser([fc])
         parser.parse()

@@ -8,5 +8,6 @@ utilisateurs et les tests (ex: ``DistributorParser``).
 """
 
 from .parser.distributor_parser import DistributorParser
+from .utils.registry import ParsersRegistry, get_registry
 
-__all__ = ["DistributorParser"]
+__all__ = ["DistributorParser", "ParsersRegistry", "get_registry"]

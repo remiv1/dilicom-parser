@@ -47,8 +47,6 @@ Ensuite, utiliser le parser dans votre code Python :
 
 ```python
 from dotenv import load_dotenv
-from dilicom_parser import DistributorParser
-from dilicom_parser.classifier
 
 load_dotenv('path/to/.env')
 
@@ -58,4 +56,29 @@ data = parser.parse_file("distributeur.txt")
 for line in data.lines:
     print(line.bloc1.rs1)   # Raison sociale principale du distributeur
     print(line.bloc1.ville)  # Ville du distributeur
+```
+
+### Dans un notebook Jupyter
+
+```python
+from src.dilicom_parser.classifier import FilesClassifier
+from pathlib import Path
+import ipynbname
+path = ipynbname.path()
+
+files_directory = Path(path).parent / "dilicom"
+file_list = list(files_directory.glob(pattern="*"))
+classifier = FilesClassifier(file_list=file_list)
+
+classifier.classify()
+
+print("Classification terminée. Résultats :")
+from pprint import pprint
+pprint(classifier.count_by_type())
+
+```
+
+```console
+Classification terminée. Résultats :
+{'distributor': 9, 'eancom': 5, 'gencod': 4}
 ```

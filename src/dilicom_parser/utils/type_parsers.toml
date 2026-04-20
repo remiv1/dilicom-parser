@@ -1,0 +1,20 @@
+# Configuration pour mapper les types de données à leurs callables de parsing respectifs.
+# Structure: [types.<type_name>]
+#   parser_module   : chemin du module contenant le callable
+#   parser_callable : nom de la fonction ou de la classe de parsing
+#                     (optionnel — par défaut : parse_<type_name>)
+
+[types.distributor]
+parser_module = "dilicom_parser.parser.distributor_parser"
+parser_callable = "DistributorParser"
+header_content = "Distrib_DLC"
+
+[types.eancom]
+parser_module = "dilicom_parser.parser.service_parser"
+parser_callable = "ServiceParser"
+header_content = "EANCOM"
+
+[types.gencod]
+parser_module = "dilicom_parser.parser.service_parser"
+parser_callable = "ServiceParser"
+header_content = "GENCOD"

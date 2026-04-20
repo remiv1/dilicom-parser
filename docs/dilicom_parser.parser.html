@@ -88,7 +88,7 @@ Cette classe est responsable de :</p>
 <dt>Méthodes :</dt><dd><ul class="simple">
 <li><p>__init__() : Initialise les attributs de la classe et crée le répertoire s’il n’existe pas</p></li>
 <li><dl class="simple">
-<dt>parse()<span class="classifier">Parse les fichiers de type “supplier” et extrait les données</span></dt><dd><p>(combine _transform_data_to_dataframe() et _df_to_distributor_data()).</p>
+<dt>parse()<span class="classifier">Parse les fichiers de type “distributor” et extrait les données</span></dt><dd><p>(combine _transform_data_to_dataframe() et _df_to_distributor_data()).</p>
 </dd>
 </dl>
 </li>
@@ -100,16 +100,16 @@ Cette classe est responsable de :</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dilicom_parser.parser.distributor_parser.DistributorParser.parse">
 <span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.distributor_parser.DistributorParser.parse" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Parse les fichiers de type “supplier” et extrait les données.</p>
+<dd><p>Parse les fichiers de type “distributor” et extrait les données.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>None</strong></p>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Liste des données parsées</p>
 </dd>
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.distributor.DistributorData" title="dilicom_parser.models.distributor.DistributorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributorData</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -122,12 +122,12 @@ Cette classe est responsable de :</p>
 <p>Module de parsing des fichiers de messages de service Dilicom.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.service_parser.</span></span><span class="sig-name descname"><span class="pre">ServiceParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser" title="Lien vers cette définition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.parser.service_parser.</span></span><span class="sig-name descname"><span class="pre">ServiceParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_contents</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Parseur pour les fichiers de messages de service (ATE/ALE/ANE/AST).
-- Détecte automatiquement le format du fichier (GENCOD/EANCOM) et utilise le parseur approprié.
-- Les messages GENCOD sont stockés dans une liste de GencodServiceMessage.
-- Les messages EANCOM sont stockés dans une instance d’EancomInterchange.</p>
+- Traite une liste de FileContent et détecte automatiquement le format (GENCOD/EANCOM).
+- Les messages GENCOD sont retournés dans une liste de GencodServiceMessage.
+- Les messages EANCOM sont retournés dans une instance d’EancomInterchange.</p>
 <ul class="simple">
 <li><p>ATE : Accusé de réception technique</p></li>
 <li><p>ALE : Accusé de réception logistique</p></li>
@@ -138,43 +138,22 @@ Cette classe est responsable de :</p>
 - GENCOD (CNUT 05003) : fichiers à plat séparés par “;”
 - EANCOM D96A (APERAK) : fichiers EDIFACT</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser.parse_content">
-<span class="sig-name descname"><span class="pre">parse_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser.parse_content" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Parse du contenu brut de message de service.</p>
+<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser.parse" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Parse la liste de FileContent.</p>
+<p>Traite chaque FileContent en détectant son format et en utilisant
+le parseur approprié (GENCOD ou EANCOM).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>content</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Contenu brut du fichier.</p>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.GencodServiceMessage" title="dilicom_parser.models.service.GencodServiceMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">GencodServiceMessage</span></code></a>] | <a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.EancomInterchange" title="dilicom_parser.models.service.EancomInterchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">EancomInterchange</span></code></a>]</span></p>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.GencodServiceMessage" title="dilicom_parser.models.service.GencodServiceMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">GencodServiceMessage</span></code></a>] | <a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.EancomInterchange" title="dilicom_parser.models.service.EancomInterchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">EancomInterchange</span></code></a></span></p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Liste contenant les résultats du parsing.
+- List[GencodServiceMessage] pour les fichiers GENCOD
+- EancomInterchange pour les fichiers EANCOM</p>
 </dd>
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>Liste de GencodServiceMessage pour du GENCOD</p></li>
-<li><p>EancomInterchange pour de l’EANCOM</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dilicom_parser.parser.service_parser.ServiceParser.parse_file">
-<span class="sig-name descname"><span class="pre">parse_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.parser.service_parser.ServiceParser.parse_file" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Lit et parse un fichier de message de service.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Nom du fichier à parser dans le répertoire configuré.</p>
-</dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.GencodServiceMessage" title="dilicom_parser.models.service.GencodServiceMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">GencodServiceMessage</span></code></a>] | <a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.service.EancomInterchange" title="dilicom_parser.models.service.EancomInterchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">EancomInterchange</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>Liste de GencodServiceMessage pour un fichier GENCOD</p></li>
-<li><p>EancomInterchange pour un fichier EANCOM</p></li>
-</ul>
-</p>
+<dt class="field-odd">Lève<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Si la liste de FileContent est vide</p>
 </dd>
 </dl>
 </dd></dl>

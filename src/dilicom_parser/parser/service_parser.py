@@ -1,10 +1,9 @@
 """Module de parsing des fichiers de messages de service Dilicom."""
 
 import logging
-from typing import Optional, List, Union
-from os import getenv
-from pathlib import Path
+from typing import List, Union
 
+from ..models.classifier import FileContent
 from ..models.service import (
     GencodServiceMessage,
     EancomInterchange,
@@ -19,9 +18,9 @@ logger = logging.getLogger(__name__)
 class ServiceParser:
     """
     Parseur pour les fichiers de messages de service (ATE/ALE/ANE/AST).
-    - Détecte automatiquement le format du fichier (GENCOD/EANCOM) et utilise le parseur approprié.
-    - Les messages GENCOD sont stockés dans une liste de GencodServiceMessage.
-    - Les messages EANCOM sont stockés dans une instance d'EancomInterchange.
+    - Traite une liste de FileContent et détecte automatiquement le format (GENCOD/EANCOM).
+    - Les messages GENCOD sont retournés dans une liste de GencodServiceMessage.
+    - Les messages EANCOM sont retournés dans une instance d'EancomInterchange.
 
     - ATE : Accusé de réception technique
     - ALE : Accusé de réception logistique
@@ -33,15 +32,14 @@ class ServiceParser:
     - EANCOM D96A (APERAK) : fichiers EDIFACT
     """
 
-    def __init__(self, directory: Optional[str] = None) -> None:
-        self.directory: Path = Path(
-            directory or getenv("DILICOM_IN_DIR", "./DILICOM_IN")
-        )
-        self.gencod_messages: List[GencodServiceMessage] = []
-        self.eancom_interchange: Optional[EancomInterchange] = None
-        if not self.directory.exists():
-            logger.debug("Création du répertoire '%s'", self.directory)
-            self.directory.mkdir(parents=True, exist_ok=True)
+    def __init__(self, file_contents: List[FileContent]) -> None:
+        """Initialise le parseur avec une liste de FileContent.
+
+        Args:
+            file_contents: Liste de FileContent à parser
+        """
+        self.file_contents = file_contents
+        self.parsed_results: List[Union[List[GencodServiceMessage], EancomInterchange]] = []
 
     def _detect_format(self, content: str) -> str:
         """
@@ -61,63 +59,93 @@ class ServiceParser:
         logger.debug("Format détecté: GENCOD")
         return "gencod"
 
-    def parse_file(
-        self, filename: str
-    ) -> Union[List[GencodServiceMessage], EancomInterchange]:
-        """
-        Lit et parse un fichier de message de service.
+    def _reconstruct_content(self, file_content: FileContent) -> str:
+        """Reconstruit le contenu texte à partir d'un FileContent.
 
         Args:
-            filename: Nom du fichier à parser dans le répertoire configuré.
+            file_content: FileContent à reconstruire
 
         Returns:
-            - Liste de GencodServiceMessage pour un fichier GENCOD
-            - EancomInterchange pour un fichier EANCOM
+            Contenu texte original (header + data + footer)
         """
-        file_path = self.directory / filename
-        content = file_path.read_text(encoding="cp1252")
-        file_format = self._detect_format(content)
+        lines: list[str] = []
 
-        if file_format == "eancom":
-            self.eancom_interchange = parse_eancom(content)
-            logger.debug(
-                "Fichier '%s' parsé avec succès. Interchange EANCOM extrait.", filename
+        # Ajouter le header
+        # Pour EANCOM/GENCOD, ref_file contient la première ligne originale
+        # Pour Distributor, on la reconstruit à partir des champs
+        if file_content.header.ref_file.startswith(("UNB", "05003", "L000000")):
+            # C'est la première ligne originale (stockée dans ref_file)
+            lines.append(file_content.header.ref_file)
+        else:
+            # Format distributor : reconstituer la ligne
+            lines.append(
+                f"{file_content.header.ref_file};" + \
+                f"{file_content.header.type_file};" + \
+                f"{file_content.header.date_file}"
             )
-            return self.eancom_interchange
 
-        lines = content.splitlines()
-        self.gencod_messages = parse_gencod_lines(lines)
-        logger.debug(
-            "Fichier '%s' parsé avec succès. Nombre de messages GENCOD extraits: %d",
-            filename,
-            len(self.gencod_messages),
-        )
-        return self.gencod_messages
+        # Ajouter les données
+        for row in file_content.data:
+            lines.append(";".join(row))
 
-    def parse_content(
-        self, content: str
-    ) -> Union[List[GencodServiceMessage], EancomInterchange]:
-        """
-        Parse du contenu brut de message de service.
+        # Ajouter le footer
+        if file_content.footer:
+            lines.append(file_content.footer)
 
-        Args:
-            content: Contenu brut du fichier.
+        return "\n".join(lines)
+
+    def parse(self) -> List[Union[List[GencodServiceMessage], EancomInterchange]]:
+        """Parse la liste de FileContent.
+
+        Traite chaque FileContent en détectant son format et en utilisant
+        le parseur approprié (GENCOD ou EANCOM).
 
         Returns:
-            - Liste de GencodServiceMessage pour du GENCOD
-            - EancomInterchange pour de l'EANCOM
+            Liste contenant les résultats du parsing.
+            - List[GencodServiceMessage] pour les fichiers GENCOD
+            - EancomInterchange pour les fichiers EANCOM
+
+        Raises:
+            ValueError: Si la liste de FileContent est vide
         """
-        file_format = self._detect_format(content)
+        if not self.file_contents:
+            message = "Aucun FileContent à parser"
+            logger.error(message)
+            raise ValueError(message)
 
-        if file_format == "eancom":
-            self.eancom_interchange = parse_eancom(content)
-            logger.debug("Contenu parsé avec succès. Interchange EANCOM extrait.")
-            return self.eancom_interchange
+        self.parsed_results = []
 
-        lines = content.splitlines()
-        self.gencod_messages = parse_gencod_lines(lines)
-        logger.debug(
-            "Contenu parsé avec succès. Nombre de messages GENCOD extraits: %d",
-            len(self.gencod_messages),
-        )
-        return self.gencod_messages
+        for file_content in self.file_contents:
+            try:
+                # Reconstruire le contenu texte
+                content = self._reconstruct_content(file_content)
+
+                # Détecter le format
+                file_format = self._detect_format(content)
+
+                if file_format == "eancom":
+                    result = parse_eancom(content)
+                    logger.debug(
+                        "Fichier EANCOM parsé avec succès. "
+                        "Interchange EANCOM extrait."
+                    )
+                else:  # gencod
+                    lines = content.splitlines()
+                    result = parse_gencod_lines(lines)
+                    logger.debug(
+                        "Fichier GENCOD parsé avec succès. "
+                        "Nombre de messages GENCOD extraits: %d",
+                        len(result),
+                    )
+
+                self.parsed_results.append(result)
+
+            except Exception as e:
+                logger.error(
+                    "Erreur lors du parsing du fichier %s: %s",
+                    file_content.header.ref_file or file_content.header.type_file,
+                    str(e),
+                )
+                raise
+
+        return self.parsed_results

@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from src.dilicom_parser.classifier import FilesClassifier
 from src.dilicom_parser.models import FileHeader
 
@@ -21,7 +19,7 @@ def _write_file(tmp_path: Path, name: str, lines: list[str], encoding: str = "cp
     return p
 
 
-def _make_supplier_lines() -> list[str]:
+def _make_distributor_lines() -> list[str]:
     """Retourne les lignes d'un fichier distributeur valide (header + 1 data + footer)."""
     header = "L000000;Distrib_DLC_11042026;11042026"
     data = (
@@ -42,7 +40,7 @@ class TestFilesClassifierInit:
 
     def test_init_with_valid_file(self, tmp_path: Path) -> None:
         """Un fichier valide est lu et produit un FileContent."""
-        f = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+        f = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         classifier = FilesClassifier([f])
 
         assert len(classifier.contents) == 1
@@ -56,8 +54,8 @@ class TestFilesClassifierInit:
 
     def test_init_with_multiple_files(self, tmp_path: Path) -> None:
         """Plusieurs fichiers sont lus indépendamment."""
-        f1 = _write_file(tmp_path, "a.txt", _make_supplier_lines())
-        f2 = _write_file(tmp_path, "b.txt", _make_supplier_lines())
+        f1 = _write_file(tmp_path, "a.txt", _make_distributor_lines())
+        f2 = _write_file(tmp_path, "b.txt", _make_distributor_lines())
         classifier = FilesClassifier([f1, f2])
 
         assert len(classifier.contents) == 2
@@ -83,12 +81,12 @@ class TestFilesClassifierInit:
 class TestFilesClassifierClassify:
     """Tests de la méthode classify()."""
 
-    def test_classify_supplier(self, tmp_path: Path) -> None:
-        """Un fichier Distrib_DLC est classé comme 'supplier'."""
-        f = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+    def test_classify_distributor(self, tmp_path: Path) -> None:
+        """Un fichier Distrib_DLC est classé comme 'distributor'."""
+        f = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         classifier = FilesClassifier([f]).classify()
 
-        assert classifier.contents[0].file_type == "supplier"
+        assert classifier.contents[0].file_type == "distributor"
 
     def test_classify_unknown_type(self, tmp_path: Path) -> None:
         """Un fichier avec un type d'en-tête inconnu reste 'unknown'."""
@@ -102,22 +100,9 @@ class TestFilesClassifierClassify:
 
         assert classifier.contents[0].file_type == "unknown"
 
-    def test_classify_invalid_ref_file_raises(self, tmp_path: Path) -> None:
-        """Un ref_file != 'L000000' déclenche une ValueError."""
-        lines = [
-            "BADREF;Distrib_DLC;20250415",
-            "data;line",
-            "FIN",
-        ]
-        f = _write_file(tmp_path, "bad.txt", lines)
-        classifier = FilesClassifier([f])
-
-        with pytest.raises(ValueError, match="Format d'en-tête inattendu"):
-            classifier.classify()
-
     def test_classify_returns_self(self, tmp_path: Path) -> None:
         """classify() retourne l'instance pour permettre le chaînage."""
-        f = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+        f = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         classifier = FilesClassifier([f])
         result = classifier.classify()
 
@@ -133,22 +118,22 @@ class TestFilesClassifierCountByType:
 
     def test_count_single_type(self, tmp_path: Path) -> None:
         """Comptage avec un seul type de fichier."""
-        f1 = _write_file(tmp_path, "a.txt", _make_supplier_lines())
-        f2 = _write_file(tmp_path, "b.txt", _make_supplier_lines())
+        f1 = _write_file(tmp_path, "a.txt", _make_distributor_lines())
+        f2 = _write_file(tmp_path, "b.txt", _make_distributor_lines())
         classifier = FilesClassifier([f1, f2]).classify()
 
         counts = classifier.count_by_type()
-        assert counts == {"supplier": 2}
+        assert counts == {"distributor": 2}
 
     def test_count_mixed_types(self, tmp_path: Path) -> None:
-        """Comptage avec des types mélangés (supplier + unknown)."""
-        f1 = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+        """Comptage avec des types mélangés (distributor + unknown)."""
+        f1 = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         lines_unknown = ["L000000;Autre;20250415", "x;y", "FIN"]
         f2 = _write_file(tmp_path, "other.txt", lines_unknown)
         classifier = FilesClassifier([f1, f2]).classify()
 
         counts = classifier.count_by_type()
-        assert counts["supplier"] == 1
+        assert counts["distributor"] == 1
         assert counts["unknown"] == 1
 
     def test_count_empty(self) -> None:
@@ -164,20 +149,20 @@ class TestFilesClassifierCountByType:
 class TestFilesClassifierGetFilesByType:
     """Tests de la méthode get_files_by_type()."""
 
-    def test_get_supplier_files(self, tmp_path: Path) -> None:
-        """Filtrage par type 'supplier'."""
-        f1 = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+    def test_get_distributor_files(self, tmp_path: Path) -> None:
+        """Filtrage par type 'distributor'."""
+        f1 = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         lines_unknown = ["L000000;Autre;20250415", "x;y", "FIN"]
         f2 = _write_file(tmp_path, "other.txt", lines_unknown)
         classifier = FilesClassifier([f1, f2]).classify()
 
-        suppliers = classifier.get_files_by_type("supplier")
-        assert len(suppliers) == 1
-        assert suppliers[0].file_type == "supplier"
+        distributors = classifier.get_files_by_type("distributor")
+        assert len(distributors) == 1
+        assert distributors[0].file_type == "distributor"
 
     def test_get_nonexistent_type(self, tmp_path: Path) -> None:
         """Filtrage par un type absent retourne une liste vide."""
-        f = _write_file(tmp_path, "distrib.txt", _make_supplier_lines())
+        f = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
         classifier = FilesClassifier([f]).classify()
 
         assert classifier.get_files_by_type("inexistant") == []

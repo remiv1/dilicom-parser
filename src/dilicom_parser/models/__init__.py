@@ -27,3 +27,6 @@ from .distributor import (
     DistributorDataBloc2,  # pylint: disable=unused-import # type: ignore
     DistributorDataBloc3,  # pylint: disable=unused-import # type: ignore
 )
+from .utils import (
+    ParserConfig,  # pylint: disable=unused-import # type: ignore
+)

@@ -65,3 +65,9 @@
 ### Added 2026-4-20 (1)
 
 - Change logic for verifying file type using a clasifier instead of using a method in the parser. This allows to separate the concerns and to have a more flexible architecture for future extensions. The classifier is now responsible for determining the type of each file, using a dictionary with keys = strings to search in the header of the file and values = the corresponding class object to use for parsing. The parser can now parse many files of same type in a single call and the classifier can easily give to each parser the correct list of files to parse in a single call.
+
+## [0.2.5] - 2026-4-20
+
+### Added 2026-4-20 (2)
+
+- Added a parse method in the classifier to call the parse method of each parser with the list of files of the corresponding type. This allows to have a single entry point for parsing all the files, and to get a dictionary with keys = file types and values = lists of parsed objects for each type.

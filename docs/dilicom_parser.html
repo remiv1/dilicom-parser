@@ -269,8 +269,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="dilicom_parser.parser.html#module-dilicom_parser.parser.service_parser">dilicom_parser.parser.service_parser module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="dilicom_parser.parser.html#dilicom_parser.parser.service_parser.ServiceParser"><code class="docutils literal notranslate"><span class="pre">ServiceParser</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.parser.html#dilicom_parser.parser.service_parser.ServiceParser.parse_content"><code class="docutils literal notranslate"><span class="pre">ServiceParser.parse_content()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.parser.html#dilicom_parser.parser.service_parser.ServiceParser.parse_file"><code class="docutils literal notranslate"><span class="pre">ServiceParser.parse_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.parser.html#dilicom_parser.parser.service_parser.ServiceParser.parse"><code class="docutils literal notranslate"><span class="pre">ServiceParser.parse()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -340,7 +339,19 @@
 <li class="toctree-l3"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.exceptions.SegmentInconnuWarning"><code class="docutils literal notranslate"><span class="pre">SegmentInconnuWarning</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.utils.html#module-dilicom_parser.utils">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dilicom_parser.utils.html#module-dilicom_parser.utils">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.get_config"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.get_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.get_header_start"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.get_header_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.get_headers_and_types"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.get_headers_and_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.get_module"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.get_module()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.get_parser"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.get_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry.list_types"><code class="docutils literal notranslate"><span class="pre">ParsersRegistry.list_types()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.get_registry"><code class="docutils literal notranslate"><span class="pre">get_registry()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -380,7 +391,7 @@ Cette classe est responsable de :</p>
 <dt>Méthodes :</dt><dd><ul class="simple">
 <li><p>__init__() : Initialise les attributs de la classe et crée le répertoire s’il n’existe pas</p></li>
 <li><dl class="simple">
-<dt>parse()<span class="classifier">Parse les fichiers de type “supplier” et extrait les données</span></dt><dd><p>(combine _transform_data_to_dataframe() et _df_to_distributor_data()).</p>
+<dt>parse()<span class="classifier">Parse les fichiers de type “distributor” et extrait les données</span></dt><dd><p>(combine _transform_data_to_dataframe() et _df_to_distributor_data()).</p>
 </dd>
 </dl>
 </li>
@@ -392,20 +403,143 @@ Cette classe est responsable de :</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dilicom_parser.DistributorParser.parse">
 <span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.DistributorParser.parse" title="Lien vers cette définition">¶</a></dt>
-<dd><p>Parse les fichiers de type “supplier” et extrait les données.</p>
+<dd><p>Parse les fichiers de type “distributor” et extrait les données.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>None</strong></p>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Liste des données parsées</p>
 </dd>
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="dilicom_parser.models.html#dilicom_parser.models.distributor.DistributorData" title="dilicom_parser.models.distributor.DistributorData"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistributorData</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dilicom_parser.</span></span><span class="sig-name descname"><span class="pre">ParsersRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Registre centralisé pour accéder aux parsers du package.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.get_config" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Récupère la configuration pour un type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Nom du type</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParserConfig</span></code></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Configuration du type</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – Si le type n’existe pas</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.get_header_start">
+<span class="sig-name descname"><span class="pre">get_header_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.get_header_start" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Liste le contenu de l’en-tête pour tous les types disponibles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contenu de l’en-tête pour tous les types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.get_headers_and_types">
+<span class="sig-name descname"><span class="pre">get_headers_and_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.get_headers_and_types" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Retourne un dictionnaire {header_content: type_name} pour tous les types configurés.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionnaire mappant le contenu d’en-tête au nom du type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.get_module">
+<span class="sig-name descname"><span class="pre">get_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.get_module" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Récupère le module de parser complet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Nom du type</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module importé</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ImportError</strong> – Si le module ne peut pas être importé</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.get_parser">
+<span class="sig-name descname"><span class="pre">get_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.get_parser" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Récupère le callable de parsing pour un type donné.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Nom du type (ex : « distributor », « eancom »)</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fonction ou classe de parsing</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – Si le type n’existe pas dans la configuration</p></li>
+<li><p><strong>ImportError</strong> – Si le module ou le callable ne peut pas être importé</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dilicom_parser.ParsersRegistry.list_types">
+<span class="sig-name descname"><span class="pre">list_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.ParsersRegistry.list_types" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Liste tous les types disponibles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dilicom_parser.get_registry">
+<span class="sig-prename descclassname"><span class="pre">dilicom_parser.</span></span><span class="sig-name descname"><span class="pre">get_registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dilicom_parser.get_registry" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Retourne l’instance globale du registre (singleton).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="dilicom_parser.utils.html#dilicom_parser.utils.ParsersRegistry" title="dilicom_parser.utils.registry.ParsersRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsersRegistry</span></code></a></span></p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instance ParsersRegistry</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

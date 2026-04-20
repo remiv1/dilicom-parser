@@ -34,7 +34,7 @@ class DistributorParser:    # pylint: disable=too-few-public-methods
 
     Méthodes :
         - __init__() : Initialise les attributs de la classe et crée le répertoire s'il n'existe pas
-        - parse() : Parse les fichiers de type 'supplier' et extrait les données
+        - parse() : Parse les fichiers de type 'distributor' et extrait les données
                     (combine _transform_data_to_dataframe() et _df_to_distributor_data()).
         - _transform_data_to_dataframe() : transforme la donnée texte en un DataFrame pandas.
         - _df_to_distributor_data() : Convertit un DataFrame en une instance de DistributorData.
@@ -43,21 +43,21 @@ class DistributorParser:    # pylint: disable=too-few-public-methods
     def __init__(self, distributor_list: list[FileContent]) -> None:
         self.files_data: list[FileContent] = distributor_list
         self.distributor_data: list[DistributorData] = []
-        if any(f.file_type != "supplier" for f in distributor_list):
+        if any(f.file_type != "distributor" for f in distributor_list):
             logger.warning(
-                "Certains fichiers ne sont pas de type 'supplier'." \
+                "Certains fichiers ne sont pas de type 'distributor'." \
                 " Veuillez vérifier les en-têtes des fichiers."
             )
-            raise ValueError("Tous les fichiers doivent être de type 'supplier' pour le parsing.")
+            raise ValueError("Les fichiers doivent être de type 'distributor' pour le parsing.")
 
-    def parse(self) -> None:
+    def parse(self) -> list[DistributorData]:
         """
-        Parse les fichiers de type 'supplier' et extrait les données.
+        Parse les fichiers de type 'distributor' et extrait les données.
 
         Args:
             None
         Returns:
-            None
+            list[DistributorData]: Liste des données parsées
         """
         self.distributor_data = []  # Réinitialiser les données du distributeur avant de parser
         for f in self.files_data:
@@ -69,6 +69,7 @@ class DistributorParser:    # pylint: disable=too-few-public-methods
                 logger.warning(
                     "Aucune donnée à parser. Veuillez d'abord parser le fichier."
                 )
+        return self.distributor_data
 
     def _transform_data_to_dataframe(self) -> "DistributorParser":
         """
