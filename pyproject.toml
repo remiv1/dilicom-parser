@@ -1,6 +1,6 @@
 [project]
 name = "dilicom-parser"
-version = "0.2.6"
+version = "0.2.7"
 description = "Bibliothèque souveraine pour parser les fichiers Dilicom déposés sur le serveur SFTP de Dilicom avec connecteur SFTP intégré."
 authors = [{name="Rémi Verschuur", email="rverschuur@audit-io.fr"}]
 readme = "README.md"

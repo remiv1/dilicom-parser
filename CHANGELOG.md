@@ -81,3 +81,9 @@
     ```python
     from __future__ import annotations
     ```
+
+## [0.2.7] - 2026-4-21
+
+### Fixed 2026-4-21 (2)
+
+- Problem of parsing distributors files fixed by changing the condition to check if the file is a distributor file in the classifier. The condition now checks if "Distrib_DLC" is in the header type_file instead of checking if it starts with "Distrib_DLC". This allows to correctly identify distributor files even if they have a complete path in the header.

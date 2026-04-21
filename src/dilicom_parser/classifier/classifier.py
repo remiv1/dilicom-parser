@@ -58,7 +58,7 @@ class FilesClassifier:
 
                     # Format CSV (Distributor) : splitter par ";"
                     # Autres formats (EANCOM, GENCOD) : garder les lignes entières
-                    if header.type_file.startswith("Distrib_DLC"):
+                    if "Distrib_DLC" in header.type_file:
                         # Format CSV : chaque ligne devient une liste
                         data = [line.strip().split(";") for line in lines[1:-1]]
                     else:
