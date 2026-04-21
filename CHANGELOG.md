@@ -71,3 +71,13 @@
 ### Added 2026-4-20 (2)
 
 - Added a parse method in the classifier to call the parse method of each parser with the list of files of the corresponding type. This allows to have a single entry point for parsing all the files, and to get a dictionary with keys = file types and values = lists of parsed objects for each type.
+
+## [0.2.6] - 2026-4-21
+
+### Fixed 2026-4-21 (1)
+
+- Problem TypeError: type 'Series' is not subscriptable fixed by added
+
+    ```python
+    from __future__ import annotations
+    ```

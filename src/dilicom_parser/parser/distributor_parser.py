@@ -1,5 +1,6 @@
 """Module de parsing des fichiers distributeurs Dilicom."""
 
+from __future__ import annotations
 from typing import Optional, Any
 from dataclasses import fields
 import logging
