@@ -87,3 +87,9 @@
 ### Fixed 2026-4-21 (2)
 
 - Problem of parsing distributors files fixed by changing the condition to check if the file is a distributor file in the classifier. The condition now checks if "Distrib_DLC" is in the header type_file instead of checking if it starts with "Distrib_DLC". This allows to correctly identify distributor files even if they have a complete path in the header.
+
+## [0.2.8] - 2026-4-24
+
+### Fixed 2026-4-24 (1)
+
+- Problem of ignoring files with unrecognized header or encoding fixed by catching only ValueError exceptions instead of also UnicodeDecodeError exceptions. This allows to correctly ignore files with unrecognized header or encoding without crashing the program due to UnicodeDecodeError exceptions.

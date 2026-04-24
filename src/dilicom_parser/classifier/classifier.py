@@ -51,27 +51,34 @@ class FilesClassifier:
         contents: list[FileContent] = []
         for f in self.file_list:
             if f.is_file():
-                with f.open("r", encoding="cp1252", newline="") as file:
-                    lines = file.readlines()
-                    header = self.__get_headers(lines[0])
-                    footer = lines[-1].strip()
+                try:
+                    with f.open("r", encoding="cp1252", newline="") as file:
+                        lines = file.readlines()
+                        header = self.__get_headers(lines[0])
+                        footer = lines[-1].strip()
 
-                    # Format CSV (Distributor) : splitter par ";"
-                    # Autres formats (EANCOM, GENCOD) : garder les lignes entières
-                    if "Distrib_DLC" in header.type_file:
-                        # Format CSV : chaque ligne devient une liste
-                        data = [line.strip().split(";") for line in lines[1:-1]]
-                    else:
-                        # Format texte/EDIFACT : chaque ligne est un élément unique
-                        data = [[line.strip()] for line in lines[1:-1]]
+                        # Format CSV (Distributor) : splitter par ";"
+                        # Autres formats (EANCOM, GENCOD) : garder les lignes entières
+                        if "Distrib_DLC" in header.type_file:
+                            # Format CSV : chaque ligne devient une liste
+                            data = [line.strip().split(";") for line in lines[1:-1]]
+                        else:
+                            # Format texte/EDIFACT : chaque ligne est un élément unique
+                            data = [[line.strip()] for line in lines[1:-1]]
 
-                    content = FileContent(header=header, data=data, footer=footer)
-                    contents.append(content)
-                    logger.debug(
-                        "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
+                        content = FileContent(header=header, data=data, footer=footer)
+                        contents.append(content)
+                        logger.debug(
+                            "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
+                            f.name,
+                            header,
+                            len(data),
+                        )
+                except ValueError as e:
+                    logger.warning(
+                        "Fichier ignoré (en-tête ou encodage non reconnu): %s — %s",
                         f.name,
-                        header,
-                        len(data),
+                        e,
                     )
             else:
                 logger.warning("Le chemin %s n'est pas un fichier valide.", f)
