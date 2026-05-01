@@ -1,0 +1,3 @@
+from ...models.service import GencodCommentaireAleAte as GencodCommentaireAleAte, GencodCommentaireErreur as GencodCommentaireErreur, GencodServiceMessage as GencodServiceMessage
+
+def parse_gencod_lines(lines: list[str]) -> list[GencodServiceMessage]: ...

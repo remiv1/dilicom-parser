@@ -1,7 +1,9 @@
 """Tests unitaires pour le FilesClassifier."""
 
+import shutil
 from pathlib import Path
 
+import pytest
 from src.dilicom_parser.classifier import FilesClassifier
 from src.dilicom_parser.models import FileHeader
 
@@ -72,6 +74,59 @@ class TestFilesClassifierInit:
         """Une liste vide ne produit aucun contenu."""
         classifier = FilesClassifier([])
         assert len(classifier.contents) == 0
+
+    def test_force_streaming_over_512_mib_with_warning(
+            self,
+            tmp_path: Path,
+            monkeypatch: pytest.MonkeyPatch
+        ) -> None:
+        """Un fichier >512 MiB force le streaming même si l'option est désactivée."""
+        f = _write_file(tmp_path, "large.txt", _make_distributor_lines())
+        real_stat = Path.stat
+
+        def fake_stat(path: Path):
+            if path == f:
+                return type(
+                    "FakeStat",
+                    (),
+                    {"st_size": FilesClassifier.STREAMING_FILE_SIZE_THRESHOLD_BYTES + 1},
+                )()
+            return real_stat(path)
+
+        monkeypatch.setattr(Path, "stat", fake_stat)
+
+        with pytest.warns(UserWarning, match="Mode streaming activé automatiquement"):
+            classifier = FilesClassifier([f], streaming_option=False)
+
+        assert classifier.streaming_option is True
+
+    def test_no_force_streaming_under_threshold(self, tmp_path: Path) -> None:
+        """Sous le seuil, le mode non-streaming reste actif."""
+        f = _write_file(tmp_path, "small.txt", _make_distributor_lines())
+        classifier = FilesClassifier([f], streaming_option=False)
+
+        assert classifier.streaming_option is False
+
+    def test_init_unzips_zip_rdy_and_parses_other_files(self, tmp_path: Path) -> None:
+        """
+        L'initialisation extrait un .zip.rdy, supprime l'archive, puis le parsing reste fonctionnel.
+        """
+        source_zip = FIXTURES_DIR / "DIF489084922.zip.rdy"
+        copied_zip = tmp_path / source_zip.name
+        shutil.copy2(source_zip, copied_zip)
+
+        distributor_file = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
+        classifier = FilesClassifier([copied_zip, distributor_file]).classify()
+        parsed = classifier.parse()
+
+        extracted_dir = tmp_path / "DIF489084922"
+
+        assert not copied_zip.exists()
+        assert extracted_dir.exists()
+        extracted_files = [p for p in extracted_dir.rglob("*") if p.is_file()]
+        assert extracted_files
+        assert any(p.parent == extracted_dir or extracted_dir in p.parents for p in classifier.file_list)
+        assert "distributor" in parsed
 
 
 # ---------------------------------------------------------------------------

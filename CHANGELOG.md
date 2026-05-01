@@ -93,3 +93,16 @@
 ### Fixed 2026-4-24 (1)
 
 - Problem of ignoring files with unrecognized header or encoding fixed by catching only ValueError exceptions instead of also UnicodeDecodeError exceptions. This allows to correctly ignore files with unrecognized header or encoding without crashing the program due to UnicodeDecodeError exceptions.
+
+## [0.2.9] - 2026-5-1
+
+### Added 2026-5-1 (1)
+
+- Add solution to parse ONIX files with onixlib. This allows to have a more robust and complete parsing of ONIX files, with support for all the features and variations of the ONIX format, and to get a structured representation of the ONIX data as Python objects.
+- Add example of usage in the README.md file for parsing ONIX files with onixlib. This allows to show how to use the new functionality for parsing ONIX files with onixlib, and to provide a clear and practical example for users who want to parse ONIX files with the dilicom-parser package.
+- Add onixlib to the dependencies in the pyproject.toml file. This allows to ensure that onixlib is installed when installing the dilicom-parser package, and to avoid import errors when using the functionality for parsing ONIX files with onixlib.
+- Add tests for parsing ONIX files with onixlib. This allows to verify that the new functionality for parsing ONIX files with onixlib works correctly, and to ensure the quality and reliability of the code for parsing ONIX files with onixlib in the dilicom-parser package.
+- Add type hints for the new functionality for parsing ONIX files with onixlib. This allows to improve the readability and maintainability of the code for parsing ONIX files with onixlib, and to provide better support for type checking and code completion when using the functionality for parsing ONIX files with onixlib in the dilicom-parser package.
+- Add documentation for the new functionality for parsing ONIX files with onixlib in the README.md file. This allows to provide clear and comprehensive documentation for users who want to use the functionality for parsing ONIX files with onixlib, and to explain the features and benefits of using onixlib for parsing ONIX files in the dilicom-parser package.
+- Use of a streaming option in the classifier to parse large files without loading them entirely into memory. This allows to handle large files more efficiently and to avoid memory issues when parsing large files with the dilicom-parser package. The streaming option is implemented by using generators to read and parse the files line by line, instead of reading the entire file into memory at once. This allows to process large files in a more memory-efficient way, and to improve the performance of the parsing process for large files in the dilicom-parser package.
+- The streaming option is automatically enabled when only one file is bigger than 512MB. This allows to optimize the parsing process for large files without requiring the user to manually enable the streaming option, and to ensure that large files are parsed efficiently without causing memory issues in the dilicom-parser package.
