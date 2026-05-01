@@ -37,3 +37,7 @@ clean:
 	rm -rf build $(DIST_DIR) *.egg-info
 	rm -rf src/*.egg-info
 	rm -rf $(DOCS_SRC_DIR)/_build
+	find . -type d -name "__pycache__" -prune -exec rm -rf {} +
+	rm -rf .pytest_cache
+	rm -rf .mypy_cache
+	
