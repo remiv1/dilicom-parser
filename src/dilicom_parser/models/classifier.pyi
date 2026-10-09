@@ -1,5 +1,6 @@
 import pandas as pd
 from dataclasses import dataclass
+from pathlib import Path
 
 @dataclass
 class FileHeader:
@@ -14,3 +15,4 @@ class FileContent:
     footer: str
     file_type: str = ...
     df: pd.DataFrame | None = ...
+    source_path: Path | None = ...

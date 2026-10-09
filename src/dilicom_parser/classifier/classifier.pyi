@@ -2,7 +2,8 @@ from ..models import FileContent as FileContent, FileHeader as FileHeader, Parse
 from ..utils import ParsersRegistry as ParsersRegistry # pylint: disable=unused-import
 from _typeshed import Incomplete
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
+from onixlib import Product
 
 logger: Incomplete
 
@@ -18,4 +19,5 @@ class FilesClassifier:
     def classify(self) -> FilesClassifier: ...
     def count_by_type(self) -> dict[str, int]: ...
     def get_files_by_type(self, file_type: str) -> list[FileContent]: ... # pylint: disable=unused-argument
+    def iter_onix_products(self) -> Iterator[Product]: ...
     def parse(self) -> dict[str, list[Any]]: ...

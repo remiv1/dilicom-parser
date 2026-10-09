@@ -49,7 +49,7 @@ DILICOM_SECRET=password
 
 ## 🧪 Cas d'usage
 
-### 1. Parser des fichiers locaux (distributor / eancom / gencod)
+### 1. Parser des fichiers locaux (distributor / eancom / gencod / onix)
 
 ```python
 from pathlib import Path
@@ -58,7 +58,7 @@ from dilicom_parser.classifier import FilesClassifier
 files_directory = Path("/path/to/dilicom/files")
 file_list = list(files_directory.glob("*"))
 
-classifier = FilesClassifier(file_list=file_list, streaming_option=True)
+classifier = FilesClassifier(file_list=file_list, streaming_option=False)
 classifier.classify()
 
 counts = classifier.count_by_type()
@@ -72,6 +72,18 @@ if distributor_results:
     first_line = first_file.lines[0]
     print(first_line.bloc1.rs1)
     print(first_line.bloc1.ville)
+
+onix_notices = parsed.get("onix", [])
+for notice in onix_notices:
+    print(notice.header.sender_name, len(notice.products))
+```
+
+Pour parcourir un catalogue ONIX volumineux sans charger les notices en mémoire :
+
+```python
+classifier = FilesClassifier(file_list=file_list, streaming_option=True).classify()
+for product in classifier.iter_onix_products():
+    print(product.isbn, product.title)
 ```
 
 ### 2. Récupérer les fichiers via SFTP puis parser
@@ -117,19 +129,21 @@ pprint(parsed.keys())
 
 Paramètre utile:
 
-- `streaming_option=True` (défaut) pour un traitement orienté streaming.
-- `streaming_option=False` pour un traitement non-streaming, sauf si un fichier dépasse `512 MiB` (forçage automatique du streaming).
+- `streaming_option=True` (défaut) pour parcourir les produits ONIX à la demande.
+- `streaming_option=False` pour obtenir des notices ONIX complètes via `parse()`, sauf si un fichier ONIX extrait dépasse `512 MiB`.
 
 Note sur le mode streaming:
 
-- Si `streaming_option=False` mais qu'au moins un fichier dépasse `512 MiB`, le mode streaming est activé automatiquement.
+- Si `streaming_option=False` mais qu'au moins un fichier ONIX extrait dépasse `512 MiB`, le mode streaming ONIX est activé automatiquement.
 - Ce basculement est journalisé (`WARNING`) et déclenche aussi un avertissement Python (`UserWarning`).
+- En mode streaming, `parse()` traite les autres formats mais omet la clé `onix` ; `iter_onix_products()` fournit les objets `Product` d'`onixlib` un par un.
 
 Note sur les archives:
 
 - À l'initialisation, les fichiers `.zip` et `.zip.rdy` sont extraits automatiquement dans un dossier dédié.
 - Les fichiers extraits sont ajoutés à la liste des fichiers à traiter.
 - L'archive source est supprimée après extraction réussie.
+- Les fichiers XML ONIX extraits sont reconnus par leur élément racine, sans dépendre du nom de l'archive. Hors streaming, `parsed["onix"]` contient une notice `onixlib` par fichier.
 
 ## 🧾 Stubs de typage
 

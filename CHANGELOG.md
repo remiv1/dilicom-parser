@@ -106,3 +106,13 @@
 - Add documentation for the new functionality for parsing ONIX files with onixlib in the README.md file. This allows to provide clear and comprehensive documentation for users who want to use the functionality for parsing ONIX files with onixlib, and to explain the features and benefits of using onixlib for parsing ONIX files in the dilicom-parser package.
 - Use of a streaming option in the classifier to parse large files without loading them entirely into memory. This allows to handle large files more efficiently and to avoid memory issues when parsing large files with the dilicom-parser package. The streaming option is implemented by using generators to read and parse the files line by line, instead of reading the entire file into memory at once. This allows to process large files in a more memory-efficient way, and to improve the performance of the parsing process for large files in the dilicom-parser package.
 - The streaming option is automatically enabled when only one file is bigger than 512MB. This allows to optimize the parsing process for large files without requiring the user to manually enable the streaming option, and to ensure that large files are parsed efficiently without causing memory issues in the dilicom-parser package.
+
+## [1.0.0] - 2026-10-9
+
+### Fixed 2026-10-9
+
+- With extracting files before classifying files, the ONIX files were not correctly recognized and processed. This issue has been fixed to ensure that ONIX files are properly identified and handled after being extracted.
+
+### Status 2026-10-9
+
+- Status changed to "Stable"

@@ -1,6 +1,6 @@
 [project]
 name = "dilicom-parser"
-version = "0.2.9"
+version = "1.0.0"
 description = "Bibliothèque souveraine pour parser les fichiers Dilicom déposés sur le serveur SFTP de Dilicom avec connecteur SFTP intégré."
 authors = [{name="Rémi Verschuur", email="rverschuur@audit-io.fr"}]
 readme = "README.md"
@@ -9,7 +9,7 @@ requires-python = ">=3.11, <3.15"
 dependencies = ["pandas", "paramiko", "python-dotenv", "onixlib"]
 keywords = ["dilicom", "livres", "édition", "ONIX", "SFTP", "EDI", "distribution"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "License :: OSI Approved :: MIT License",
@@ -43,3 +43,6 @@ where = ["src"]
 "dilicom_parser.parser.services" = ["*.pyi"]
 "dilicom_parser.transport" = ["*.pyi"]
 "dilicom_parser.utils" = ["*.toml", "*.pyi"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

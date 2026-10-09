@@ -5,6 +5,7 @@ fichiers distants sur le serveur SFTP de Dilicom.
 
 from typing import Optional
 from dataclasses import dataclass
+from pathlib import Path
 import pandas as pd
 
 @dataclass
@@ -31,9 +32,11 @@ class FileContent:
         data (list[list[str]]): Les données du fichier, représentées comme une liste
                                 de listes de chaînes de caractères.
         footer (str): Le pied de page du fichier.
+        source_path (Path | None): Chemin source conservé pour les fichiers ONIX.
     """
     header: FileHeader
     data: list[list[str]]
     footer: str
     file_type: str = "unknown"
     df: Optional[pd.DataFrame] = None
+    source_path: Path | None = None

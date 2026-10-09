@@ -1,10 +1,12 @@
 """Module de classement des fichiers reçus depuis le serveur FTP de Dilicom."""
 
 import warnings
-from typing import List, Any
+from typing import List, Any, Iterator
 import logging
 from pathlib import Path
+from xml.etree import ElementTree
 import zipfile
+from onixlib import Product
 from ..models import FileHeader, FileContent, ParserConfig
 from ..utils import ParsersRegistry
 
@@ -16,8 +18,8 @@ class FilesClassifier:
 
     Cette classe assure la gestion complète du pipeline de traitement des fichiers :
     - Extraction automatique des archives (.zip, .zip.rdy, etc.)
-    - Lecture et classification par type de fichier (distributor, eancom, gencod)
-    - Basculement automatique en mode streaming si les fichiers dépassent 512 MiB
+    - Lecture et classification par type de fichier (distributor, eancom, gencod, onix)
+    - Basculement automatique en mode streaming si un fichier ONIX dépasse 512 MiB
     - Parsing des données selon le type de fichier détecté
 
     Attributes:
@@ -32,7 +34,7 @@ class FilesClassifier:
         - Un fichier "livre" (archive) est identifié par la présence de ".zip" dans ses extensions.
         - Supports les formats : .zip, .zip.rdy, .zip.rdy.csv, etc.
         - Les archives sont automatiquement supprimées après extraction réussie.
-        - Le streaming est forcé si un fichier non-zippé dépasse 512 MiB.
+        - Le streaming ONIX est forcé si un fichier ONIX extrait dépasse 512 MiB.
     """
 
     STREAMING_FILE_SIZE_THRESHOLD_BYTES = 512 * 1024 * 1024
@@ -43,7 +45,7 @@ class FilesClassifier:
         Enchaîne les opérations suivantes :
         1. Extraction des archives (.zip, .zip.rdy, etc.)
         2. Lecture des contenus des fichiers extraits
-        3. Résolution du mode streaming (forçage si fichiers > 512 MiB)
+        3. Résolution du mode streaming ONIX (forçage si fichier ONIX > 512 MiB)
 
         Args:
             file_list (list[Path]): Liste des chemins de fichiers/archives à traiter.
@@ -176,9 +178,9 @@ class FilesClassifier:
     def __resolve_streaming_option(self, streaming_option: bool) -> bool:
         """Résout le mode streaming avec détection automatique des fichiers volumineux.
 
-        Basculement automatique au mode streaming (True) si :
+        Basculement automatique au mode streaming ONIX (True) si :
         - L'utilisateur a demandé le mode non-streaming (streaming_option=False).
-        - ET au moins un fichier (non-zippé) dépasse le seuil de 512 MiB.
+        - ET au moins un fichier ONIX extrait dépasse le seuil de 512 MiB.
 
         En cas de basculement forcé :
         - Log en WARNING avec le(s) fichier(s) problématique(s).
@@ -196,7 +198,10 @@ class FilesClassifier:
             - Les erreurs de lecture de taille sont silencieuses (logged en WARNING).
         """
         oversized_files: list[Path] = []
-        for f in self.file_list:
+        for content in self.contents:
+            if content.source_path is None:
+                continue
+            f = content.source_path
             try:
                 if f.is_file() and f.stat().st_size > self.STREAMING_FILE_SIZE_THRESHOLD_BYTES:
                     oversized_files.append(f)
@@ -258,13 +263,46 @@ class FilesClassifier:
                 raise ValueError(message)
         return file_header
 
+    def __is_xml(self, file_path: Path) -> bool:
+        with file_path.open("rb") as source:
+            prefix = source.read(256).lstrip(b"\xef\xbb\xbf \t\r\n")
+        return file_path.suffix.lower() == ".xml" or prefix.startswith(
+            (b"<?xml", b"<ONIXMessage")
+        )
+
+    def __get_onix_content(self, file_path: Path) -> FileContent | None:
+        with file_path.open("rb") as source:
+            root = next(ElementTree.iterparse(source, events=("start",)))[1]
+        if root.tag != "{http://www.editeur.org/onix/3.0/reference}ONIXMessage":
+            logger.warning("Fichier XML ignoré (format non ONIX): %s", file_path.name)
+            return None
+        return FileContent(
+            header=FileHeader(ref_file=file_path.name, type_file="ONIX", date_file=""),
+            data=[],
+            footer="",
+            source_path=file_path,
+        )
+
+    def __get_text_content(self, file_path: Path) -> FileContent:
+        with file_path.open("r", encoding="cp1252", newline="") as file:
+            lines = file.readlines()
+        header = self.__get_headers(lines[0])
+        footer = lines[-1].strip()
+
+        if "Distrib_DLC" in header.type_file:
+            data = [line.strip().split(";") for line in lines[1:-1]]
+        else:
+            data = [[line.strip()] for line in lines[1:-1]]
+
+        return FileContent(header=header, data=data, footer=footer)
+
     def __get_content(self) -> List[FileContent]:
         """Lit tous les fichiers de la liste et extrait leurs contenus structurés.
 
         Pour chaque fichier ordinaire (non-répertoire) :
-        1. Lit les lignes en encodage cp1252.
-        2. Parse l'en-tête (première ligne).
-        3. Extrait le pied de page (dernière ligne).
+        1. Reconnaît les XML ONIX par leur élément racine et conserve leur chemin.
+        2. Pour les autres formats, lit les lignes en encodage cp1252.
+        3. Parse l'en-tête (première ligne) et extrait le pied de page.
         4. Formate les données intermédiaires selon le type :
            - Format CSV (Distributor) : chaque ligne est une liste splitée par ";".
            - Formats texte (EANCOM, GENCOD) : chaque ligne est un élément unique.
@@ -275,47 +313,41 @@ class FilesClassifier:
                               Les fichiers en erreur sont loggés en WARNING et ignorés.
 
         Note:
-            - Encodage : cp1252 (norme française Dilicom).
+            - Encodage texte : cp1252 (norme française Dilicom).
+            - L'encodage XML est géré par le parseur XML et onixlib.
             - Les erreurs d'en-tête ou d'encodage ne bloquent pas le traitement global.
         """
         contents: list[FileContent] = []
         for f in self.file_list:
-            if f.is_file():
-                try:
-                    with f.open("r", encoding="cp1252", newline="") as file:
-                        lines = file.readlines()
-                        header = self.__get_headers(lines[0])
-                        footer = lines[-1].strip()
-
-                        # Format CSV (Distributor) : splitter par ";"
-                        # Autres formats (EANCOM, GENCOD) : garder les lignes entières
-                        if "Distrib_DLC" in header.type_file:
-                            # Format CSV : chaque ligne devient une liste
-                            data = [line.strip().split(";") for line in lines[1:-1]]
-                        else:
-                            # Format texte/EDIFACT : chaque ligne est un élément unique
-                            data = [[line.strip()] for line in lines[1:-1]]
-
-                        content = FileContent(header=header, data=data, footer=footer)
-                        contents.append(content)
-                        logger.debug(
-                            "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
-                            f.name,
-                            header,
-                            len(data),
-                        )
-                except ValueError as e:
-                    logger.warning(
-                        "Fichier ignoré (en-tête ou encodage non reconnu): %s — %s",
-                        f.name,
-                        e,
-                    )
-            else:
+            if not f.is_file():
                 logger.warning("Le chemin %s n'est pas un fichier valide.", f)
+                continue
+            try:
+                if self.__is_xml(f):
+                    onix_content = self.__get_onix_content(f)
+                    if onix_content is not None:
+                        contents.append(onix_content)
+                    continue
+                content = self.__get_text_content(f)
+                contents.append(content)
+                logger.debug(
+                    "Fichier lu: %s, en-tête: %s, nombre de lignes de données: %d",
+                    f.name,
+                    content.header,
+                    len(content.data),
+                )
+            except ValueError as e:
+                logger.warning(
+                    "Fichier ignoré (en-tête ou encodage non reconnu): %s — %s",
+                    f.name,
+                    e,
+                )
+            except ElementTree.ParseError as e:
+                logger.warning("Fichier XML invalide ignoré: %s — %s", f.name, e)
         return contents
 
     def classify(self) -> "FilesClassifier":
-        """Classifie tous les fichiers selon leur type (distributor, eancom, gencod, unknown).
+        """Classifie tous les fichiers selon leur type (distributor, eancom, gencod, onix, unknown).
 
         Pour chaque contenu chargé, consulte son en-tête (header.type_file) et
         le mappe à un type connu via la registry des parsers.
@@ -324,6 +356,7 @@ class FilesClassifier:
         - "Distrib_DLC" → type "distributor"
         - "EANCOM" → type "eancom"
         - "GENCOD" → type "gencod"
+        - "ONIX" → type "onix"
         - Tout autre → type "unknown"
 
         Retourne self pour permettre le chaînage des appels.
@@ -396,6 +429,15 @@ class FilesClassifier:
         logger.info("Nombre de fichiers de type '%s': %d", file_type, len(filtered_files))
         return filtered_files
 
+    def iter_onix_products(self) -> Iterator[Product]:
+        """Parcourt les produits ONIX sans charger les notices en mémoire.
+
+        Returns:
+            Itérateur de produits onixlib pour les fichiers ONIX classifiés.
+        """
+        parser_class = self.parsers_registry.get_parser("onix")
+        return parser_class(self.get_files_by_type("onix")).iter_products()
+
     def parse(self) -> dict[str, list[Any]]:
         """Parse tous les fichiers selon leur type reconnu en utilisant la registry des parsers.
 
@@ -405,6 +447,7 @@ class FilesClassifier:
         1. Vérifie qu'au moins un fichier a été classifié.
         2. Pour chaque type connu :
            - Récupère les fichiers du type.
+              - Ignore ONIX si le streaming est activé (utiliser iter_onix_products()).
            - Instancie le parser approprié.
            - Appelle sa méthode parse().
            - Stocke les résultats.
@@ -413,7 +456,8 @@ class FilesClassifier:
         Returns:
             dict[str, list[Any]]: Résultats organisés par type de fichier.
                                  Exemple : {"distributor": [...], "eancom": [...], "gencod": [...]}
-                                 Les types sans fichier ou en erreur ont une liste vide.
+                                 ONIX est absent en mode streaming ; les types en erreur
+                                 ont une liste vide.
 
         Raises:
             ValueError: Si aucun fichier n'a été classifié (tous de type "unknown").
@@ -438,6 +482,9 @@ class FilesClassifier:
             if not files_of_type:
                 logger.debug("Aucun fichier classifié du type '%s'", file_type)
                 continue
+            if file_type == "onix" and self.streaming_option:
+                logger.info("Notices ONIX non chargées : utilisez iter_onix_products().")
+                continue
 
             try:
                 parser_class = self.parsers_registry.get_parser(file_type)
@@ -450,7 +497,7 @@ class FilesClassifier:
 
                 logger.debug("Parsing réussi pour le type '%s'", file_type)
             except (KeyError, ImportError, ValueError, AttributeError, TypeError) as e:
-                logger.error(
+                logger.exception(
                     "Erreur lors du parsing des fichiers de type '%s': %s",
                     file_type,
                     str(e),

@@ -18,3 +18,8 @@ header_content = "EANCOM"
 parser_module = "dilicom_parser.parser.service_parser"
 parser_callable = "ServiceParser"
 header_content = "GENCOD"
+
+[types.onix]
+parser_module = "dilicom_parser.parser.onix_parser"
+parser_callable = "OnixParser"
+header_content = "ONIX"

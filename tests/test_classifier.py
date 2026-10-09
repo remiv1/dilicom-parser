@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 
 import pytest
+from onixlib import Notice, Product
 from src.dilicom_parser.classifier import FilesClassifier
 from src.dilicom_parser.models import FileHeader
 
@@ -80,8 +81,9 @@ class TestFilesClassifierInit:
             tmp_path: Path,
             monkeypatch: pytest.MonkeyPatch
         ) -> None:
-        """Un fichier >512 MiB force le streaming même si l'option est désactivée."""
-        f = _write_file(tmp_path, "large.txt", _make_distributor_lines())
+        """Un ONIX >512 MiB force le streaming même si l'option est désactivée."""
+        f = tmp_path / "large.xml"
+        shutil.copy2(FIXTURES_DIR / "505657671.xml", f)
         real_stat = Path.stat
 
         def fake_stat(path: Path):
@@ -98,7 +100,32 @@ class TestFilesClassifierInit:
         with pytest.warns(UserWarning, match="Mode streaming activé automatiquement"):
             classifier = FilesClassifier([f], streaming_option=False)
 
+        classifier.classify()
         assert classifier.streaming_option is True
+        assert classifier.count_by_type() == {"onix": 1}
+        assert "onix" not in classifier.parse()
+        assert len(list(classifier.iter_onix_products())) == 1
+
+    def test_large_distributor_does_not_force_onix_streaming(
+            self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+        ) -> None:
+        """Un fichier texte volumineux ne change pas le mode ONIX."""
+        f = _write_file(tmp_path, "large.txt", _make_distributor_lines())
+        real_stat = Path.stat
+
+        def fake_stat(path: Path):
+            if path == f:
+                return type(
+                    "FakeStat", (),
+                    {"st_size": FilesClassifier.STREAMING_FILE_SIZE_THRESHOLD_BYTES + 1},
+                )()
+            return real_stat(path)
+
+        monkeypatch.setattr(Path, "stat", fake_stat)
+        classifier = FilesClassifier([f], streaming_option=False).classify()
+
+        assert classifier.streaming_option is False
+        assert "distributor" in classifier.parse()
 
     def test_no_force_streaming_under_threshold(self, tmp_path: Path) -> None:
         """Sous le seuil, le mode non-streaming reste actif."""
@@ -135,6 +162,67 @@ class TestFilesClassifierInit:
 
 class TestFilesClassifierClassify:
     """Tests de la méthode classify()."""
+
+    def test_onix_streaming_yields_products_without_loading_notice(
+            self, monkeypatch: pytest.MonkeyPatch
+        ) -> None:
+        """Le mode streaming ne charge pas la notice complete."""
+        classifier = FilesClassifier([FIXTURES_DIR / "505657671.xml"], streaming_option=True).classify()
+
+        def fail_parse_full(*args: object, **kwargs: object) -> None:
+            raise AssertionError("Notice.parse_full ne doit pas etre appele")
+
+        monkeypatch.setattr(Notice, "parse_full", fail_parse_full)
+
+        assert "onix" not in classifier.parse()
+        products = classifier.iter_onix_products()
+        assert isinstance(next(products), Product)
+        assert list(products) == []
+
+    def test_classify_and_parse_onix_xml(self) -> None:
+        """Un XML ONIX est classe et parse en notice onixlib."""
+        classifier = FilesClassifier([FIXTURES_DIR / "505657671.xml"], streaming_option=False).classify()
+
+        assert classifier.count_by_type() == {"onix": 1}
+        notices = classifier.parse()["onix"]
+        assert len(notices) == 1
+        assert isinstance(notices[0], Notice)
+        assert notices[0].header.sender_name == "DILICOM"
+        assert len(notices[0].products) == 1
+
+    def test_classify_and_parse_onix_archive(self, tmp_path: Path) -> None:
+        """Le XML d'une archive est classe meme apres extraction."""
+        archive = tmp_path / "505657671.zip.csv"
+        shutil.copy2(FIXTURES_DIR / "505657671.zip", archive)
+
+        classifier = FilesClassifier([archive], streaming_option=False).classify()
+
+        assert not archive.exists()
+        assert classifier.count_by_type() == {"onix": 1}
+        assert len(classifier.parse()["onix"][0].products) == 1
+
+    def test_non_onix_xml_is_ignored(self, tmp_path: Path) -> None:
+        """Une declaration XML ne suffit pas pour classifier un fichier ONIX."""
+        xml_file = _write_file(
+            tmp_path, "other.xml", ['<?xml version="1.0"?>', "<Other />"], encoding="utf-8"
+        )
+        distributor_file = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
+
+        classifier = FilesClassifier([xml_file, distributor_file]).classify()
+
+        assert classifier.count_by_type() == {"distributor": 1}
+        assert "onix" not in classifier.parse()
+
+    def test_onix_and_distributor_are_parsed_together(self, tmp_path: Path) -> None:
+        """Un lot mixte conserve les deux types de resultats."""
+        distributor_file = _write_file(tmp_path, "distrib.txt", _make_distributor_lines())
+
+        classifier = FilesClassifier(
+            [FIXTURES_DIR / "505657671.xml", distributor_file], streaming_option=False
+        ).classify()
+
+        assert classifier.count_by_type() == {"onix": 1, "distributor": 1}
+        assert set(classifier.parse()) == {"onix", "distributor"}
 
     def test_classify_distributor(self, tmp_path: Path) -> None:
         """Un fichier Distrib_DLC est classé comme 'distributor'."""

@@ -31,7 +31,10 @@ check: build
 upload:
 	$(PYTHON) -m twine upload $(DIST_DIR)/*
 
-release: build docs check upload
+test:
+	$(PYTHON) -m pytest tests
+
+release: test build docs check upload
 
 clean:
 	rm -rf build $(DIST_DIR) *.egg-info
